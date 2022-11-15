@@ -43,6 +43,12 @@ npm run dev
 
 
 
+# husky 
+[husky文档地址]: ./docs/husky.md
+- 通过 pre-commit 检测提交时代码规范
+
+- lint-staged 自动修复格式错误
+
 # 参考链接
 
 [vite创建vue项目]: https://vitejs.cn/vite3-cn/guide/#scaffolding-your-first-vite-project
