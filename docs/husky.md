@@ -65,3 +65,47 @@ pnpm prepare
 那么想要处理这两个问题，就需要使用另外一个插件 [lint-staged](https://github.com/okonet/lint-staged) ！
 
 在代码提交之前，进行代码规则检查能够确保进入git库的代码都是符合代码规则的。但是整个项目上运行lint速度会很慢，lint-staged能够让lint只检测暂存区的文件，所以速度很快。
+
+**1、安装lint-staged**
+
+```
+pnpm add lint-staged -D
+```
+
+**2、修改 `package.json` 配置**
+
+```
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue,ts}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
+```
+
+**3、如上配置，每次它只会在你本地 `commit` 之前，校验你提交的内容是否符合你本地配置的 `eslint`规则(这个见文档 [ESLint](https://panjiachen.github.io/vue-element-admin-site/zh/guide/advanced/eslint.html) )，校验会出现两种结果：**
+
+1. 如果符合规则：则会提交成功。
+2. 如果不符合规则：它会自动执行 `eslint --fix` 尝试帮你自动修复，如果修复成功则会帮你把修复好的代码提交，如果失败，则会提示你错误，让你修好这个错误之后才能允许你提交代码。
+
+
+
+**4、修改 `.husky/pre-commit` 文件**
+
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged
+```
+
+**5、再次执行提交代码**
+
+**6、发现 暂存区中 不符合 `ESlint` 的内容，被自动修复**
