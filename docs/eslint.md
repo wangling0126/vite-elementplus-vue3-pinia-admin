@@ -368,8 +368,15 @@ module.exports = {
 
 # 参考文档
 
-[在 vue3 、ts、vite 项目中使用 eslint与prettier与stylelint与husky的详细指南]: https://www.swvq.com/article/detail/471
-[eslint中文配置文档]: https://eslint.bootcss.com/docs/user-guide/configuring
-[eslint中文文档]: https://zh-hans.eslint.org/
-[eslint-plugin-vue rules]: https://eslint.vuejs.org/rules/
-[eslint-plugin npm文档]: https://www.npmjs.com/package/@typescript-eslint/eslint-plugin/v/4.29.2-alpha.5
+[在 vue3 、ts、vite 项目中使用 eslint与prettier与stylelint与husky的详细指南](https://www.swvq.com/article/detail/471)
+
+[eslint中文配置文档](https://eslint.bootcss.com/docs/user-guide/configuring)
+
+[eslint中文文档](https://zh-hans.eslint.org/)
+
+[eslint-plugin-vue rules](https://eslint.vuejs.org/rules/)
+
+[eslint-plugin npm文档](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin/v/4.29.2-alpha.5)
+
+
+

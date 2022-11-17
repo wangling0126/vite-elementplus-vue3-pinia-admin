@@ -1,6 +1,6 @@
 # 安装
 
-> [prettier安装链接]: https://www.prettier.cn/docs/install.html
+> [prettier安装链接](https://www.prettier.cn/docs/install.html)
 
 ```bash
 # 执行安装命令
@@ -96,6 +96,7 @@ pnpm add eslint-config-prettier eslint-plugin-prettier -D
 
 # 参考链接
 
-[prettier官网]: https://www.prettier.cn/
+[prettier官网](https://www.prettier.cn/)
 
-[搞懂 ESLint 和 Prettier的冲突]: https://zhuanlan.zhihu.com/p/80574300
+[搞懂 ESLint 和 Prettier的冲突](https://zhuanlan.zhihu.com/p/80574300)
+
