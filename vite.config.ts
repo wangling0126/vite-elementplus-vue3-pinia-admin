@@ -9,5 +9,9 @@ export default defineConfig({
     alias: {
       '@': resolve('src') //作为 entries 的选项
     }
+  },
+  // vite热更新
+  server: {
+    hmr: true
   }
 })
