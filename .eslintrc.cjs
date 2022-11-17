@@ -34,6 +34,7 @@ module.exports = {
       }
     ],
     // 解决ts any错误  Don't use `{}` as a type. `{}` actually means "any non-nullish value".
-    '@typescript-eslint/no-explicit-any': ['off']
+    '@typescript-eslint/no-explicit-any': ['off'],
+    'vue/multi-word-component-names': 'off'
   }
 }
