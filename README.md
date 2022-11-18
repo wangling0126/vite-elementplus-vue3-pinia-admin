@@ -23,10 +23,10 @@ npm run dev
 - [git代码提交规范配置](./docs/代码提交规范.md)
 - [husky]( ./docs/husky.md ) 
   - 通过 pre-commit 检测提交时代码规范
-
   - lint-staged 自动修复格式错误
 
-
+**全局组件封装**
+- [vue3+vite SvgIcon图标](./docs/svgIcon%E5%9B%BE%E6%A0%87.md)
 
 **遇到问题**
 
