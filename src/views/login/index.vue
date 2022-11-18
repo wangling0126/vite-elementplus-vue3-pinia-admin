@@ -5,7 +5,7 @@
       <el-form-item>
         <el-input type="text" v-model="formData.userName" placeholder="用户名">
           <template v-slot:prefix>
-            <el-icon :color="iconColor"><User /></el-icon>
+            <svg-icon icon="user" :color="iconColor"></svg-icon>
           </template>
         </el-input>
       </el-form-item>
@@ -17,17 +17,15 @@
           placeholder="密码"
         >
           <template v-slot:prefix>
-            <el-icon :color="iconColor"><Lock /></el-icon>
+            <svg-icon icon="password" :color="iconColor"></svg-icon>
           </template>
           <template v-slot:suffix>
-            <el-icon
-              :color="iconColor"
+            <svg-icon
+              :icon="!showPassword ? 'showPassword' : 'hidePassword'"
               style="cursor: pointer"
+              :color="iconColor"
               @click="toggleShowPassword"
-            >
-              <Hide v-if="showPassword" />
-              <View v-else />
-            </el-icon>
+            ></svg-icon>
           </template>
         </el-input>
       </el-form-item>
@@ -37,13 +35,12 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { User, Lock, View, Hide } from '@element-plus/icons-vue'
 const formData = reactive({
   userName: '',
   password: ''
 })
 
-const iconColor = '#817a7a'
+const iconColor = '#adaebd'
 const showPassword = ref(false)
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value
@@ -52,7 +49,7 @@ const toggleShowPassword = () => {
 
 <style lang="scss" scoped>
 .login-container {
-  background-color: #1e1e1e;
+  background-color: #2f394b;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -62,11 +59,21 @@ const toggleShowPassword = () => {
     color: white;
     margin-bottom: 30px;
   }
-  :deep .el-form {
+  :deep(.el-form) {
     width: 600px;
     padding: 48px;
-    background: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
+    .el-input__wrapper {
+      background-color: #293441;
+      box-shadow: none;
+    }
+    .el-input__inner {
+      color: #adaebd;
+    }
+  }
+  .user-icon {
+    color: v-bind(iconColor);
   }
 }
 </style>
