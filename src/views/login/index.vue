@@ -21,7 +21,7 @@
           </template>
           <template v-slot:suffix>
             <svg-icon
-              :icon="!showPassword ? 'showPassword' : 'hidePassword'"
+              :icon="showPassword ? 'showPassword' : 'hidePassword'"
               style="cursor: pointer"
               :color="iconColor"
               @click="toggleShowPassword"
