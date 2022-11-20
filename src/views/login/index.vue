@@ -1,16 +1,16 @@
 <template>
   <div class="login-container">
-    <el-form :model="formData">
+    <el-form :model="formData" :rules="loginRules" ref="formRef">
       <h2 class="title">登录界面</h2>
-      <el-form-item>
-        <el-input type="text" v-model="formData.userName" placeholder="用户名">
+      <el-form-item prop="username">
+        <el-input type="text" v-model="formData.username" placeholder="用户名">
           <template v-slot:prefix>
             <svg-icon icon="user" :color="iconColor"></svg-icon>
           </template>
         </el-input>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item prop="password">
         <el-input
           :type="showPassword ? `text` : 'password'"
           v-model="formData.password"
@@ -29,14 +29,18 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-button type="primary" style="width: 100%">登录</el-button>
+      <el-button type="primary" style="width: 100%" @click="doLogin"
+        >登录</el-button
+      >
     </el-form>
   </div>
 </template>
 <script lang="ts" setup>
+import { getUserInfo } from '@/api/modules/user'
+import type { ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
 const formData = reactive({
-  userName: '',
+  username: '',
   password: ''
 })
 
@@ -44,6 +48,49 @@ const iconColor = '#adaebd'
 const showPassword = ref(false)
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value
+}
+
+const validatePassword = () => {
+  return (rule: any, value: any, callback: any) => {
+    if (value.length < 6) {
+      callback(new Error('密码不能少于6位'))
+    } else {
+      callback()
+    }
+  }
+}
+// 验证规则
+const loginRules = ref({
+  username: [
+    {
+      required: true,
+      trigger: 'blur',
+      message: '用户名为必填项'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      trigger: 'blur',
+      validator: validatePassword()
+    }
+  ]
+})
+
+// 定义 formRef（校验规则）
+type FormInstance = InstanceType<typeof ElForm>
+const formRef = ref<FormInstance>()
+const doLogin = () => {
+  if (!formRef.value) {
+    return
+  }
+  formRef.value.validate((valid) => {
+    if (valid) {
+      getUserInfo({ username: 'wangling', password: '123456' }).then((res) => {
+        console.log(res)
+      })
+    }
+  })
 }
 </script>
 
