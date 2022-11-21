@@ -36,15 +36,18 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getUserInfo } from '@/api/modules/user'
 import type { ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
+import { useUserStore } from '@/stores/modules/user'
+
+const userStore = useUserStore()
+console.log(userStore)
 const formData = reactive({
   username: '',
   password: ''
 })
-
 const iconColor = '#adaebd'
+
 const showPassword = ref(false)
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value
@@ -86,9 +89,7 @@ const doLogin = () => {
   }
   formRef.value.validate((valid) => {
     if (valid) {
-      getUserInfo({ username: 'wangling', password: '123456' }).then((res) => {
-        console.log(res)
-      })
+      userStore.getUserInfo(formData)
     }
   })
 }
