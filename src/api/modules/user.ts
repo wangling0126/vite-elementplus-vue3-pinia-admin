@@ -1,5 +1,10 @@
+import { Login } from '../interface/login'
 import request from '../request'
 
-export const getUserInfo = (data: any) => {
-  return request.get('/user/userInfo', data)
+export const login = (data: any) => {
+  return request.post<Login.ResLogin>('/user/login', data)
+}
+
+export const getTest = () => {
+  return request.get('/user/test')
 }

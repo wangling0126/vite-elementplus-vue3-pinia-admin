@@ -39,9 +39,10 @@
 import type { ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { useUserStore } from '@/stores/modules/user'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const userStore = useUserStore()
-console.log(userStore)
 const formData = reactive({
   username: '',
   password: ''
@@ -89,7 +90,13 @@ const doLogin = () => {
   }
   formRef.value.validate((valid) => {
     if (valid) {
-      userStore.getUserInfo(formData)
+      userStore.login(formData).then((res) => {
+        if (res.code === 200) {
+          router.replace({
+            name: 'layout'
+          })
+        }
+      })
     }
   })
 }

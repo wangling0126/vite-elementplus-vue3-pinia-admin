@@ -6,7 +6,6 @@ const resolve = (dir) => path.resolve(__dirname, dir)
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd())
-  console.log(env)
 
   return {
     plugins: [

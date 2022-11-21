@@ -1,5 +1,6 @@
 import Router from 'koa-router'
 import user from '../controller/user.js'
 const router = new Router({ prefix: '/user' })
-router.get('/userInfo', user.getUserInfo)
+router.post('/login', user.login)
+router.get('/test', user.test)
 export default router

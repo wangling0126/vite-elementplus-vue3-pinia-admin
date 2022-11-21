@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 路由信息
 const publicRoutes = [
   {
+    path: '/',
+    name: 'layout',
+    component: () => import('@/views/layout/index.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/login/index.vue')

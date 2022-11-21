@@ -1,5 +1,13 @@
-import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios'
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  CreateAxiosDefaults
+} from 'axios'
 import { ResultData } from './interface'
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 const config: CreateAxiosDefaults = {
   baseURL: import.meta.env.VITE_API_URL as string,
@@ -10,6 +18,36 @@ class RequestHttp {
   service: AxiosInstance
   public constructor(config: CreateAxiosDefaults) {
     this.service = axios.create(config)
+    // axios 请求拦截器处理请求数据
+    this.service.interceptors.request.use(
+      (config: AxiosRequestConfig) => {
+        const token = localStorage.getItem('token')
+        if (!config.headers) {
+          config.headers = {}
+        }
+        config.headers!.Authorization = 'Bearer ' + token // 留意这里的 Authorization
+        return config
+      },
+      (error: AxiosError) => {
+        return Promise.reject(error)
+      }
+    )
+
+    this.service.interceptors.response.use(
+      (response: AxiosResponse) => {
+        const { code, message } = response.data || {}
+        if (code === 401) {
+          router.push('/login')
+        } else if (code !== 200) {
+          ElMessage.error(message || '服务出小差了~~')
+        }
+        return response.data
+      },
+      (error: AxiosError) => {
+        ElMessage.error(error.message || '服务出小差了~~')
+        return Promise.reject(error)
+      }
+    )
   }
   // * 常用请求方法封装
   get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {

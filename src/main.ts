@@ -12,8 +12,8 @@ export const app = createApp(App)
 import regGlobalComponent from '@/components/common/regGlobalComponent'
 
 app
-  .use(createPinia())
-  .use(ElementPlus)
   .use(router)
+  .use(ElementPlus)
+  .use(createPinia())
   .use(regGlobalComponent)
   .mount('#app')
