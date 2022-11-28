@@ -5,6 +5,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import router from './router/index'
 import './app.scss'
+import '@/styles/index.scss'
 import App from './App.vue'
 import { createPinia } from 'pinia'
 export const app = createApp(App)
