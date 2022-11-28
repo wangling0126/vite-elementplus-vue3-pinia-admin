@@ -8,3 +8,7 @@ export const login = (data: any) => {
 export const getTest = () => {
   return request.get('/user/test')
 }
+
+export const getUserInfo = () => {
+  return request.get<Login.ResUserInfo>('/user/getUserInfo')
+}

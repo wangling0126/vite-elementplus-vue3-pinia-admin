@@ -1,3 +1,4 @@
+import { LStorage } from '@/utils/storage'
 import { useUserStore } from '@/stores/modules/user'
 import { createRouter, createWebHistory } from 'vue-router'
 import { LOGIN_URL } from '@/config/index'
@@ -25,11 +26,15 @@ router.beforeEach((to, from, next) => {
   // 白名单
   const whiteList = [LOGIN_URL]
   const userStore = useUserStore()
+  const token = userStore.token || LStorage.get('token')
   // token存在的情况
-  if (userStore.token) {
+  if (token) {
     if (to.path === LOGIN_URL) {
       return next('/')
     } else {
+      if (!userStore.hasUserInfo) {
+        userStore.getUserInfo()
+      }
       return next()
     }
   } else {

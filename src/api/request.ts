@@ -1,3 +1,4 @@
+import { useUserStore } from '@/stores/modules/user'
 import { LStorage } from '@/utils/storage'
 import axios, {
   AxiosError,
@@ -38,7 +39,8 @@ class RequestHttp {
       (response: AxiosResponse) => {
         const { code, message } = response.data || {}
         if (code === 401) {
-          router.push('/login')
+          const userStore = useUserStore()
+          userStore.logout()
         } else if (code !== 200) {
           ElMessage.error(message || '服务出小差了~~')
         }

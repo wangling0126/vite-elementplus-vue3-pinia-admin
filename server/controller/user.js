@@ -49,6 +49,15 @@ class User {
       }
     }
   }
+  getUserInfo(ctx) {
+    ctx.body = {
+      code: 200,
+      data: {
+        avatar:
+          'https://t9.baidu.com/it/u=1186391898,804431409&fm=74&app=80&size=f256,256&n=0&f=JPEG&fmt=auto?sec=1669741200&t=2c39d51f80411450242c9c364ffb8e70'
+      }
+    }
+  }
 }
 
 export default new User()

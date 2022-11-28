@@ -7,4 +7,8 @@ export namespace Login {
   export interface ResLogin {
     token: string
   }
+
+  export interface ResUserInfo {
+    avatar: string
+  }
 }
