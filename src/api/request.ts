@@ -1,3 +1,4 @@
+import { LStorage } from '@/utils/storage'
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -21,7 +22,7 @@ class RequestHttp {
     // axios 请求拦截器处理请求数据
     this.service.interceptors.request.use(
       (config: AxiosRequestConfig) => {
-        const token = localStorage.getItem('token')
+        const token = LStorage.get('token')
         if (!config.headers) {
           config.headers = {}
         }
