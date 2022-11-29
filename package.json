@@ -18,12 +18,15 @@
     "cz-conventional-changelog": "3.3.0",
     "element-plus": "^2.2.21",
     "koa-jwt": "^4.0.3",
+    "path-browserify": "^1.0.1",
     "pinia": "^2.0.24",
     "sass": "^1.56.1",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/path-browserify": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "@vitejs/plugin-vue": "^3.2.0",

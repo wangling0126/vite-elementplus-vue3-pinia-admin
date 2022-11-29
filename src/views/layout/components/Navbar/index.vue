@@ -1,6 +1,8 @@
 <template>
   <div class="Navbar-container">
-    <div class="narbar-left"></div>
+    <div class="narbar-left">
+      <hamburger />
+    </div>
     <div class="narbar-right">
       <el-dropdown class="avatar-container" trigger="click">
         <template v-slot:default>
@@ -34,6 +36,7 @@ export default { name: 'Navbar' }
 <script setup lang="ts">
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/modules/user'
+import hamburger from './components/hamburger.vue'
 const userStore = useUserStore()
 
 const logout = () => {
