@@ -2,6 +2,7 @@
   <div class="Navbar-container">
     <div class="narbar-left">
       <hamburger />
+      <Breadcrumb />
     </div>
     <div class="narbar-right">
       <el-dropdown class="avatar-container" trigger="click">
@@ -37,6 +38,7 @@ export default { name: 'Navbar' }
 import { ArrowDown } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/modules/user'
 import hamburger from './components/hamburger.vue'
+import Breadcrumb from './components/Breadcrumb/index.vue'
 const userStore = useUserStore()
 
 const logout = () => {
@@ -49,6 +51,10 @@ const logout = () => {
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
+}
+.narbar-left {
+  display: flex;
+  align-items: center;
 }
 .narbar-right {
   display: flex;

@@ -45,6 +45,7 @@ const store = useGlobalStore()
   right: 0;
   z-index: 9;
   width: calc(100% - #{$sideBarWidth});
+  box-shadow: 0 0 14px 6px rgba(0, 0, 0, 0.1);
 }
 .hideSidebar .fixed-header {
   width: calc(100% - #{$hideSideBarWidth});
