@@ -1,13 +1,23 @@
 import { defineStore } from 'pinia'
+import { LANGUAGE } from '@/constant'
+import { LStorage } from '@/utils/storage'
 export const useGlobalStore = defineStore('global', {
   state() {
     return {
-      sidebarOpened: true
+      sidebarOpened: true, // 菜单折叠还是展开
+      language: LStorage.get(LANGUAGE) || 'zh'
     }
   },
   actions: {
     triggerSidebarOpened() {
       this.sidebarOpened = !this.sidebarOpened
+    },
+    /**
+     * 设置国际化
+     */
+    setLanguage(lang: string) {
+      LStorage.set(LANGUAGE, lang)
+      this.language = lang
     }
   }
 })

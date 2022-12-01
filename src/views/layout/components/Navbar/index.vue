@@ -5,6 +5,7 @@
       <Breadcrumb />
     </div>
     <div class="narbar-right">
+      <LanguageSelect class="language-select-container" />
       <el-dropdown class="avatar-container" trigger="click">
         <template v-slot:default>
           <div class="avatar-wrapper">
@@ -39,6 +40,7 @@ import { ArrowDown } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/modules/user'
 import hamburger from './components/hamburger.vue'
 import Breadcrumb from './components/Breadcrumb/index.vue'
+import LanguageSelect from '@/components/LanguageSelect/index.vue'
 const userStore = useUserStore()
 
 const logout = () => {
@@ -59,6 +61,11 @@ const logout = () => {
 .narbar-right {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+}
+.language-select-container {
+  font-size: 20px;
+  margin-right: 8px;
 }
 :deep .avatar-container {
   cursor: pointer;
