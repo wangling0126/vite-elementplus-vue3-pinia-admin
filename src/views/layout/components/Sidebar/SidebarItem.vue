@@ -3,7 +3,9 @@
     <el-sub-menu :index="route.path" v-if="route.children.length">
       <template #title>
         <svg-icon :icon="route.meta.icon"></svg-icon>
-        <span class="sub-menu-title">{{ route.meta.title }}</span>
+        <span class="sub-menu-title">{{
+          $t(`route.${route.meta.title}`)
+        }}</span>
       </template>
       <sidebar-item
         v-for="item in route.children"
@@ -13,7 +15,7 @@
     </el-sub-menu>
     <el-menu-item :index="route.path" v-else>
       <svg-icon :icon="route.meta.icon"></svg-icon>
-      <span class="sub-menu-title">{{ route.meta.title }}</span>
+      <span class="sub-menu-title">{{ $t(`route.${route.meta.title}`) }}</span>
     </el-menu-item>
   </div>
 </template>

@@ -1,9 +1,14 @@
 <template>
   <div class="login-container">
     <el-form :model="formData" :rules="loginRules" ref="formRef">
-      <h2 class="title">登录界面</h2>
+      <h2 class="title">{{ $t('login.登录界面') }}</h2>
+      <LanguageSelect />
       <el-form-item prop="username">
-        <el-input type="text" v-model="formData.username" placeholder="用户名">
+        <el-input
+          type="text"
+          v-model="formData.username"
+          :placeholder="$t('login.用户名')"
+        >
           <template v-slot:prefix>
             <svg-icon icon="user" :color="iconColor"></svg-icon>
           </template>
@@ -14,7 +19,7 @@
         <el-input
           :type="showPassword ? `text` : 'password'"
           v-model="formData.password"
-          placeholder="密码"
+          :placeholder="$t('login.密码')"
         >
           <template v-slot:prefix>
             <svg-icon icon="password" :color="iconColor"></svg-icon>
@@ -29,17 +34,20 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-button type="primary" style="width: 100%" @click="doLogin"
-        >登录</el-button
-      >
+      <el-button type="primary" style="width: 100%" @click="doLogin">{{
+        $t('login.登录')
+      }}</el-button>
     </el-form>
   </div>
 </template>
 <script lang="ts" setup>
 import type { ElForm } from 'element-plus'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useUserStore } from '@/stores/modules/user'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import LanguageSelect from '@/components/LanguageSelect/index.vue'
+const i18n = useI18n()
 const router = useRouter()
 
 const userStore = useUserStore()
@@ -57,19 +65,22 @@ const toggleShowPassword = () => {
 const validatePassword = () => {
   return (rule: any, value: any, callback: any) => {
     if (value.length < 6) {
-      callback(new Error('密码不能少于6位'))
+      callback(new Error(i18n.t('login.密码不能少于6位')))
     } else {
       callback()
     }
   }
 }
+
 // 验证规则
 const loginRules = ref({
   username: [
     {
       required: true,
       trigger: 'blur',
-      message: '用户名为必填项'
+      message: computed(() => {
+        return i18n.t('login.用户名为必填项')
+      })
     }
   ],
   password: [

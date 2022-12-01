@@ -3,6 +3,8 @@ import { useUserStore } from '@/stores/modules/user'
 import { createRouter, createWebHistory } from 'vue-router'
 import { LOGIN_URL } from '@/config/index'
 import layout from '@/views/layout/index.vue'
+import i18n from '@/i18n'
+
 // 路由信息
 const publicRoutes = [
   {

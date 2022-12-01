@@ -28,7 +28,7 @@ export default { name: 'LanguageSelect' }
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { defineProps, computed } from 'vue'
+import { computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useGlobalStore } from '@/stores/global'
 

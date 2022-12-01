@@ -2,7 +2,7 @@
   <el-breadcrumb class="breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item>
-        <a class="redirect" @click.prevent="goHome">首页</a>
+        <a class="redirect" @click.prevent="goHome">{{ $t('首页') }}</a>
       </el-breadcrumb-item>
       <el-breadcrumb-item
         v-for="(item, index) in breadcrumbData"
@@ -10,11 +10,11 @@
       >
         <!-- 不可点击项 -->
         <span v-if="index === breadcrumbData.length - 1" class="no-redirect">{{
-          item.meta.title
+          $t(`route.${item.meta.title}`)
         }}</span>
         <!-- 可点击项 -->
         <a v-else class="redirect" @click.prevent="onLinkClick(item)">{{
-          item.meta.title
+          $t(`route.${item.meta.title}`)
         }}</a>
       </el-breadcrumb-item>
     </transition-group>
