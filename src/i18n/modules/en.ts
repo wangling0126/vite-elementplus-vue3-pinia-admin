@@ -27,5 +27,13 @@ export default {
     articleDetail: 'articleDetail',
     articleEditor: 'articleEditor'
   },
-  首页: 'Home'
+  首页: 'Home',
+  主题改变: 'theme change',
+  全局设置: 'global setting',
+  全局主题: 'Global Theme',
+  主题颜色: 'Theme Color',
+  暗黑模式: 'Dark Mode',
+  灰色模式: 'Grey mode',
+  国际化: 'internationalization',
+  中文: 'Chinese'
 }

@@ -5,7 +5,10 @@
       <Breadcrumb />
     </div>
     <div class="narbar-right">
-      <LanguageSelect class="language-select-container" />
+      <!-- 主题切换 -->
+      <ThemeSeleteVue class="mr10" />
+      <!-- 语言切换 -->
+      <LanguageSelect class="language-select-container mr10" />
       <el-dropdown class="avatar-container" trigger="click">
         <template v-slot:default>
           <div class="avatar-wrapper">
@@ -41,6 +44,7 @@ import { useUserStore } from '@/stores/modules/user'
 import hamburger from './components/hamburger.vue'
 import Breadcrumb from './components/Breadcrumb/index.vue'
 import LanguageSelect from '@/components/LanguageSelect/index.vue'
+import ThemeSeleteVue from '@/components/ThemeSelete/index.vue'
 const userStore = useUserStore()
 
 const logout = () => {
@@ -79,5 +83,8 @@ const logout = () => {
       flex-shrink: 0;
     }
   }
+}
+.mr10 {
+  margin-right: 10px;
 }
 </style>
