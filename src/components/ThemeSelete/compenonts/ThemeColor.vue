@@ -2,6 +2,7 @@
   <el-color-picker
     v-model="mColor"
     :predefine="predefineColors"
+    @change="changeColor"
   ></el-color-picker>
 </template>
 
@@ -13,6 +14,8 @@ export default { name: 'ThemeColor' }
 // 预定义色值
 
 import { ref } from 'vue'
+import { useThemeStore } from '@/stores/modules/theme'
+import { generateNewStyle, writeNewStyle } from '@/utils/theme'
 const predefineColors = [
   '#ff4500',
   '#ff8c00',
@@ -29,8 +32,18 @@ const predefineColors = [
   'hsla(209, 100%, 56%, 0.73)',
   '#c7158577'
 ]
+const themeStore = useThemeStore()
 // 默认色值
-const mColor = ref('#f00')
+const mColor = ref(themeStore.mainColor)
+
+const changeColor = async (color: string) => {
+  // 1.1 获取主题色
+  const newStyleText = await generateNewStyle(mColor.value)
+  // 1.2 写入最新主题色
+  writeNewStyle(newStyleText as string)
+  // 2. 保存最新的主题色
+  themeStore.setMainColor(color)
+}
 </script>
 
 <style scoped></style>

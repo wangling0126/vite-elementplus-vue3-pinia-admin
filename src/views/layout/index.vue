@@ -7,7 +7,7 @@
     <sidebar
       id="guide-sidebar"
       class="sidebar-container"
-      :style="{ backgroundColor: variables.menuBg }"
+      :style="{ backgroundColor: varStore.cssVar.menuBg }"
     />
     <div class="main-container">
       <div class="fixed-header">
@@ -24,9 +24,10 @@
 import Navbar from './components/Navbar/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import AppMain from './components/AppMain/index.vue'
-import variables from '@/styles/variables.module.scss'
 import { useGlobalStore } from '@/stores/global'
+import { useVariablesStore } from '@/stores/modules/variables'
 const store = useGlobalStore()
+const varStore = useVariablesStore()
 </script>
 <style scoped lang="scss">
 @import '@/styles/mixin.scss';
