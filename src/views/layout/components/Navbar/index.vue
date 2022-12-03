@@ -5,6 +5,8 @@
       <Breadcrumb />
     </div>
     <div class="narbar-right">
+      <!-- 全屏软件 -->
+      <screenfull class="mr10" />
       <!-- 主题切换 -->
       <ThemeSeleteVue class="mr10" />
       <!-- 语言切换 -->
@@ -45,6 +47,7 @@ import hamburger from './components/hamburger.vue'
 import Breadcrumb from './components/Breadcrumb/index.vue'
 import LanguageSelect from '@/components/LanguageSelect/index.vue'
 import ThemeSeleteVue from '@/components/ThemeSelete/index.vue'
+import Screenfull from '@/components/Screenfull/index.vue'
 const userStore = useUserStore()
 
 const logout = () => {
