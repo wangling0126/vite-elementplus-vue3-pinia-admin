@@ -6,6 +6,7 @@ import { useGlobalStore } from '@/stores/global'
 export default function installElementPuls(app: App<Element>) {
   const store = useGlobalStore()
   app.use(ElementPlus, {
-    locale: store.language === 'en' ? en : zhCn
+    locale: store.language === 'en' ? en : zhCn,
+    size: 'small'
   })
 }

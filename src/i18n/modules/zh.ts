@@ -41,5 +41,9 @@ export default {
     closeRight: '关闭右侧',
     closeOther: '关闭其他',
     closeCurrent: '关闭当前'
+  },
+  excel: {
+    importExcel: '导入excel',
+    exportExcel: '导出excel'
   }
 }

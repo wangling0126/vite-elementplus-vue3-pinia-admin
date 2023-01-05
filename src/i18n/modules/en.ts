@@ -41,5 +41,9 @@ export default {
     closeRight: 'closeRight',
     closeOther: 'closeOther',
     closeCurrent: 'closeCurrent'
+  },
+  excel: {
+    importExcel: 'importExcel',
+    exportExcel: 'exportExcel'
   }
 }
