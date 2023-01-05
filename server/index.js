@@ -29,7 +29,7 @@ app.use(
     secret: jwtConfig.SECRET
   }).unless({
     // 配置白名单
-    path: [/\/user\/register/, /\/user\/login/]
+    path: [/\/user\/register/, /\/user\/login/, /\/userManage\/getList/]
   })
 )
 //  注册路由
