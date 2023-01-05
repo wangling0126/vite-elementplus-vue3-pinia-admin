@@ -5,3 +5,5 @@ export const LANGUAGE = 'LANGUAGE'
 export const MAIN_COLOR = 'mainColor'
 // 默认色值
 export const DEFAULT_COLOR = '#409eff'
+// tags_view
+export const TAGS_VIEW = 'tags_view'

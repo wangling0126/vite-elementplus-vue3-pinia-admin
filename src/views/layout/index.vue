@@ -13,6 +13,7 @@
       <div class="fixed-header">
         <!-- 顶部的 navbar -->
         <navbar />
+        <TagsView />
       </div>
       <!-- 内容区 -->
       <app-main />
@@ -24,6 +25,7 @@
 import Navbar from './components/Navbar/index.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import AppMain from './components/AppMain/index.vue'
+import TagsView from '@/components/TagsView/index.vue'
 import { useGlobalStore } from '@/stores/global'
 import { useVariablesStore } from '@/stores/modules/variables'
 const store = useGlobalStore()
@@ -38,17 +40,14 @@ const varStore = useVariablesStore()
   position: relative;
   height: 100%;
   width: 100%;
+  display: flex;
 }
 
 .fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
+  width: calc(100vw - #{$sideBarWidth});
   box-shadow: 0 0 14px 6px rgba(0, 0, 0, 0.1);
 }
 .hideSidebar .fixed-header {
-  width: calc(100% - #{$hideSideBarWidth});
+  width: calc(100vw - #{$hideSideBarWidth});
 }
 </style>

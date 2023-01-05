@@ -35,5 +35,11 @@ export default {
   暗黑模式: '暗黑模式',
   灰色模式: '灰色模式',
   国际化: '国际化',
-  中文: '中文'
+  中文: '中文',
+  tagsView: {
+    refresh: '刷新',
+    closeRight: '关闭右侧',
+    closeOther: '关闭其他',
+    closeCurrent: '关闭当前'
+  }
 }

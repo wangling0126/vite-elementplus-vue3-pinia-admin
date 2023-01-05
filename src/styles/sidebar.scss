@@ -2,19 +2,21 @@
   .main-container {
     min-height: 100%;
     transition: margin-left 0.28s;
-    margin-left: $sideBarWidth;
+    // margin-left: $sideBarWidth;
     position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
     height: 100%;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     overflow: hidden;
 
     // 重置 element-plus 的css
@@ -90,7 +92,7 @@
     }
 
     .main-container {
-      margin-left: 54px;
+      // margin-left: 54px;
     }
 
     .sub-menu-title-noDropdown {

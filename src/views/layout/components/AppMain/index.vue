@@ -1,6 +1,13 @@
 <template>
   <div class="app-main">
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
+    <router-view v-slot="{ Component, route }">
+      <transition name="fade-transform" mode="out-in">
+        <keep-alive>
+          <component :is="Component" :key="route.path" />
+        </keep-alive>
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -8,15 +15,45 @@
 export default { name: 'AppMain' }
 </script>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { isTags } from '@/utils/tagsView'
+import { watch } from 'vue'
+import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router'
+import { useTagsViewStore } from '@/stores/modules/tagsView'
+const route = useRoute()
+
+const tagsStore = useTagsViewStore()
+watch(
+  route,
+  (to) => {
+    if (!isTags(to.path)) {
+      return
+    }
+    const { fullPath, meta, name, params, path, query } = to
+    tagsStore.addTagsView({
+      fullPath,
+      meta,
+      name,
+      params,
+      path,
+      query
+    } as RouteLocationNormalizedLoaded)
+  },
+  {
+    immediate: true
+  }
+)
+</script>
 
 <style scoped scss>
 .app-main {
-  min-height: calc(100vh - 50px);
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding: 61px 20px 20px 20px;
+  padding: 20px;
   box-sizing: border-box;
+  flex: 1;
+  flex-shrink: 0;
+  overflow-y: auto;
 }
 </style>
