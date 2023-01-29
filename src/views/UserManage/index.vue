@@ -1,7 +1,9 @@
 <template>
   <div class="user-manage-container">
     <div class="button-group">
-      <el-button type="primary"> {{ $t('excel.importExcel') }}</el-button>
+      <el-button type="primary" @click="goImportPage">
+        {{ $t('excel.importExcel') }}</el-button
+      >
       <el-button type="success">
         {{ $t('excel.exportExcel') }}
       </el-button>
@@ -38,6 +40,7 @@ export default { name: 'UserManage' }
 import { UserMange } from '@/api/interface/userManage'
 import { getUserManageList } from '@/api/modules/userManage'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const tableData = ref<UserMange.UserManage[]>([])
 const currentPage = ref(1)
@@ -48,7 +51,6 @@ const getData = async () => {
     current: currentPage.value,
     size: pageSize.value
   })
-  console.log(res)
   const { data, current, size, total } = res.data
   tableData.value = data
   currentPage.value = current
@@ -68,6 +70,11 @@ const handleSizeChange = (size: number) => {
 }
 const getRoleName = (roles: UserMange.Roles[]) => {
   return roles.map((item) => item.rolesName).join(',')
+}
+
+const router = useRouter()
+const goImportPage = () => {
+  router.push({ name: 'import' })
 }
 </script>
 
