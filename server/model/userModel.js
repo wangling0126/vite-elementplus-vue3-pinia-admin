@@ -12,5 +12,20 @@ class UserModel {
   async getAllRoles() {
     return await query(`SELECT * FROM roles`)
   }
+  async getAllRoleIds() {
+    return await query(`SELECT id FROM roles`)
+  }
+  async insertUserManage(data) {
+    let res = `INSERT INTO user ( openTime, username,mobile,rolesId) VALUES `
+    data.forEach(({ openTime, username, mobile, rolesId }, index) => {
+      res = res + `('${openTime}', '${username}', '${mobile}', '${rolesId}')`
+      if (index === data.length - 1) {
+        res += ';'
+      } else {
+        res += ','
+      }
+    })
+    return await query(res)
+  }
 }
 export default new UserModel()

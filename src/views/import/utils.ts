@@ -11,12 +11,12 @@ export const USER_RELATIONS = {
 /**
  * 解析 excel 导入的时间格式
  */
-export const formatDate = (numb) => {
+export const formatDate = (numb: number) => {
   const time = new Date((numb - 1) * 24 * 3600000 + 1)
   time.setYear(time.getFullYear() - 70)
-  const year = time.getFullYear() + ''
-  const month = time.getMonth() + 1 + ''
-  const date = time.getDate() - 1 + ''
+  const year = time.getFullYear()
+  const month = time.getMonth() + 1
+  const date = time.getDate() - 1
   return (
     year +
     '-' +

@@ -39,7 +39,7 @@ export default { name: 'UserManage' }
 <script setup lang="ts">
 import { UserMange } from '@/api/interface/userManage'
 import { getUserManageList } from '@/api/modules/userManage'
-import { ref } from 'vue'
+import { onActivated, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const tableData = ref<UserMange.UserManage[]>([])
@@ -58,7 +58,8 @@ const getData = async () => {
   pageTotal.value = total
 }
 getData()
-
+// 处理导入用户后数据不重新加载的问题
+onActivated(getData)
 const handleCurrentPage = (current: number) => {
   currentPage.value = current
   getData()
