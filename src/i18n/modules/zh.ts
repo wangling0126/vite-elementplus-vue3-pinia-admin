@@ -44,6 +44,19 @@ export default {
   },
   excel: {
     importExcel: '导入excel',
-    exportExcel: '导出excel'
+    exportExcel: '导出excel',
+    fileName: '文件名称',
+    importSuccess: '导入成功',
+    bar: '条',
+    upload: '上传',
+    dragUpload: '拖拽导入',
+    fileNumberTips: '必须要有一个文件',
+    fileFormatTips: '文件必须是 .xlsx, .xls, .csv 格式'
+  },
+  userManage: {
+    name: '姓名',
+    mobile: '联系方式',
+    roles: '角色',
+    openTime: '开通时间'
   }
 }

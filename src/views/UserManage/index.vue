@@ -8,22 +8,31 @@
         {{ $t('excel.exportExcel') }}
       </el-button>
     </div>
-    <el-table :data="tableData">
-      <el-table-column label="姓名" prop="username"></el-table-column>
-      <el-table-column label="联系方式" prop="mobile"></el-table-column>
-      <el-table-column label="角色">
+    <el-table :data="tableData" border>
+      <el-table-column
+        :label="$t('userManage.name')"
+        prop="username"
+      ></el-table-column>
+      <el-table-column
+        :label="$t('userManage.mobile')"
+        prop="mobile"
+      ></el-table-column>
+      <el-table-column :label="$t('userManage.roles')">
         <template v-slot="{ row }">
           {{ getRoleName(row.roles) }}
         </template>
       </el-table-column>
-      <el-table-column label="开通时间" prop="openTime"></el-table-column>
+      <el-table-column
+        :label="$t('userManage.openTime')"
+        prop="openTime"
+      ></el-table-column>
     </el-table>
     <div class="pagination-box">
       <el-pagination
         :total="pageTotal"
         :current-page="currentPage"
         :page-size="pageSize"
-        :page-sizes="[1, 2, 5, 10, 20]"
+        :page-sizes="[1, 2, 5, 10, 20, 50]"
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
         @current-change="handleCurrentPage"
@@ -44,7 +53,7 @@ import { useRouter } from 'vue-router'
 
 const tableData = ref<UserMange.UserManage[]>([])
 const currentPage = ref(1)
-const pageSize = ref(1)
+const pageSize = ref(10)
 const pageTotal = ref(0)
 const getData = async () => {
   const res = await getUserManageList({

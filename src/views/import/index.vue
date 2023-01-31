@@ -1,6 +1,23 @@
 <template>
   <div class="import">
-    <ImportExport :onSuccess="onSuccess"></ImportExport>
+    <ImportExport :onSuccess="onSuccess">
+      <template #fileList>
+        <div class="show-file" v-if="currentFileName">
+          <div class="file-name">
+            {{ $t('excel.fileName') }}：{{ currentFileName }}
+          </div>
+          <el-table :data="currentExcelTableData">
+            <el-table-column
+              v-for="item in tableHeader"
+              :key="item"
+              :label="item"
+            >
+              <template #default="{ row }"> {{ row[item] }} </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </template>
+    </ImportExport>
   </div>
 </template>
 
@@ -12,9 +29,10 @@ export default { name: 'import' }
 import { userBatchImport } from '@/api/modules/userManage'
 import ImportExport from '@/components/ImportExport/index.vue'
 import { ElMessage } from 'element-plus'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { formatDate } from './utils'
-
+import { useI18n } from 'vue-i18n'
 export interface IExcelData {
   [propName: string]: string
 }
@@ -30,7 +48,12 @@ const USER_RELATIONS: { [propName: string]: string } = {
 interface IExcel {
   header: string[]
   results: IExcelData[]
+  fileName: string
 }
+
+const currentFileName = ref('')
+const currentExcelTableData = ref<IExcelData[]>([])
+const tableHeader = ref<string[]>([])
 /**
  * 筛选数据
  */
@@ -50,23 +73,34 @@ const generateData = (results: IExcelData[]) => {
   return arr
 }
 const router = useRouter()
-const onSuccess = async ({ results }: IExcel) => {
+const i18n = useI18n()
+const onSuccess = async ({ results, header, fileName }: IExcel) => {
   const uploadData = generateData(results)
-  console.log(uploadData, 'uploadData')
-  await userBatchImport(uploadData)
-    .then((result) => {
-      if (result.code === 200) {
-        ElMessage.success({
-          message: results.length + '导入成功',
-          type: 'success'
-        })
-        router.push('/user/manage')
-      }
-    })
-    .catch(() => {
-      console.log('失败了')
-    })
+  currentFileName.value = fileName
+  currentExcelTableData.value = uploadData
+  tableHeader.value = header
+  await userBatchImport(uploadData).then((result) => {
+    if (result.code === 200) {
+      ElMessage.success({
+        message: `${i18n.t('excel.importSuccess')} ${results.length}${i18n.t(
+          'excel.bar'
+        )}`,
+        type: 'success'
+      })
+      router.push('/user/manage')
+    }
+  })
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.show-file {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  .file-name {
+    margin-bottom: 10px;
+  }
+}
+</style>

@@ -44,6 +44,19 @@ export default {
   },
   excel: {
     importExcel: 'importExcel',
-    exportExcel: 'exportExcel'
+    exportExcel: 'exportExcel',
+    fileName: 'fileName',
+    importSuccess: 'import success',
+    bar: 'bar',
+    upload: 'upload',
+    dragUpload: 'drag upload',
+    fileNumberTips: 'must have a file',
+    fileFormatTips: '文件必须是 .xlsx, .xls, .csv 格式'
+  },
+  userManage: {
+    name: 'name',
+    mobile: 'mobile',
+    roles: 'roles',
+    openTime: 'openTime'
   }
 }

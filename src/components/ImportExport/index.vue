@@ -2,7 +2,7 @@
   <div class="import-export-container">
     <div class="btn-upload">
       <el-button :loading="loading" type="primary" @click="handleUpload">
-        上传
+        {{ $t('excel.upload') }}
       </el-button>
       <input
         ref="excelUploadInput"
@@ -19,17 +19,10 @@
       @dragenter.stop.prevent="handleDragover"
     >
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-      <span>拖拽导入</span>
+      <span> {{ $t('excel.dragUpload') }}</span>
     </div>
   </div>
-  <div class="show-file" v-if="currentFileName">
-    <div class="file-name">当前文件名称：{{ currentFileName }}</div>
-    <el-table :data="currentExcelTableData">
-      <el-table-column v-for="item in tableHeader" :key="item" :label="item">
-        <template #default="{ row }"> {{ row[item] }} </template>
-      </el-table-column>
-    </el-table>
-  </div>
+  <slot name="fileList"></slot>
 </template>
 
 <script lang="ts">
@@ -43,6 +36,8 @@ import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 import * as XLSX from 'xlsx'
 import { getHeaderRow } from './xlsxUtils'
+import { useI18n } from 'vue-i18n'
+const i18n = useI18n()
 const props = defineProps({
   // 上传前回调
   beforeUpload: Function,
@@ -82,7 +77,8 @@ const readerData = (file: File) => {
       // generateData({ header, results })
       currentExcelTableData.value = results
       tableHeader.value = header
-      props.onSuccess && props.onSuccess({ header, results })
+      props.onSuccess &&
+        props.onSuccess({ header, results, fileName: currentFileName.value })
       // 8. loading 处理
       loading.value = false
       // 9. 异步完成
@@ -120,13 +116,13 @@ const handleDrop = (e: DragEvent) => {
   if (loading.value) return
   const files = (e.dataTransfer as DataTransfer).files
   if (files.length !== 1) {
-    ElMessage.error('必须要有一个文件')
+    ElMessage.error(i18n.t('excel.fileNumberTips'))
     return
   }
   const rawFile = files[0]
   currentFileName.value = rawFile.name
   if (!isExcel(rawFile)) {
-    ElMessage.error('文件必须是 .xlsx, .xls, .csv 格式')
+    ElMessage.error(i18n.t('excel.fileFormatTips'))
     return false
   }
   // 触发上传事件
@@ -169,15 +165,6 @@ const handleDragover = (e: DragEvent) => {
       font-size: 60px;
       display: block;
     }
-  }
-}
-.show-file {
-  width: 700px;
-  display: flex;
-  flex-direction: column;
-  margin: 50px auto;
-  .file-name {
-    margin-bottom: 10px;
   }
 }
 </style>
