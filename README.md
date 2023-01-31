@@ -1,50 +1,51 @@
-# vite 创建 vue3+ts 项目
+# 介绍
+该项目是包括前端/后端/数据库
+- 前端： 基于 vite + vue3 + element-plus + vue-router4 + pinia + vue-i18n + typescript的一套后台管理框架 - 持续更新 现在功能不是很多
+- 后端: koa2
+- 数据库： mysql
 
-[vite创建vue项目](https://vitejs.cn/vite3-cn/guide/#scaffolding-your-first-vite-project)
+# 功能介绍
+- 接口全是通过koa2写的，数据库用的mysql,(也是第一次用koa2+mysql,主要还是学习)
+- 项目采用typescript(这个公司没有，也是学习)
+- 支持主题切换
+- 支持i18n国际化
+- excel导入，解析excel,保存到服务器
 
+
+# 安装步骤
+Clone：
 ```bash
-pnpm create vite 3vite-elementplus-vue3-admin --template vue-ts
-
-# 安装依赖
-pnpm install
-
-# 启动项目
-npm run dev
+git clone git@github.com:wangling0126/vite-elementplus-vue3-pinia-admin.git
+# or
+git clone https://github.com/wangling0126/vite-elementplus-vue3-pinia-admin.git
 ```
 
-# 文档链接
+Install：
+``` js
+// 前端
+pnpm install
 
-- [配置 eslint](./docs/eslint.md)
+// 后端
+cd server
+pnpm install
+```
+mysql安装 
 
-- [配置 prettier文档地址](./docs/prettier%E6%96%87%E6%A1%A3.md)
-- editorconfig文件配置
-  - [editorconfig文件配置](https://blog.csdn.net/lhjuejiang/article/details/110925631)
-  - [element-plus的.editorconfig文件配置](https://github1s.com/element-plus/element-plus/blob/HEAD/.editorconfig#L1-L10 )
-- [git代码提交规范配置](./docs/代码提交规范.md)
-- [husky]( ./docs/husky.md ) 
-  - 通过 pre-commit 检测提交时代码规范
-  - lint-staged 自动修复格式错误
+[mysql8安装](https://blog.csdn.net/kuailexiaomeng/article/details/123484763)
 
-**全局组件封装**
-- [vue3+vite SvgIcon图标](./docs/svgIcon%E5%9B%BE%E6%A0%87.md)
+```
+mysql使用的是 mysql8 注意设置密码的时候为Wang963.963.,因为我服务器连接的时候写的这个密码
+mysql可视化工具用的DBeaver
+导入sql文件就行了 - 后期完了在上传，这个项目应该没人来看吧
+```
 
-**遇到问题**
+运行：
+``` js
+// 前端
+pnpm dev
 
-- [warning: LF will be replaced by CRLF in 解决办法](https://zhuanlan.zhihu.com/p/347405055 )
-
-  
-
-# 参考链接
-
-[vite创建vue项目](https://vitejs.cn/vite3-cn/guide/#scaffolding-your-first-vite-project)
-
-[pnpm常用命令](https://blog.csdn.net/m0_49601821/article/details/126520682)
-
-[eslint中文配置文档](https://eslint.bootcss.com/docs/user-guide/configuring)
-
-[eslint中文文档](https://zh-hans.eslint.org/ )
-
-
-
-
+// 后端
+cd server
+pnpm dev
+```
 
