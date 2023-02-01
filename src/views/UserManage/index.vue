@@ -1,6 +1,9 @@
 <template>
   <div class="user-manage-container">
     <div class="button-group">
+      <el-button type="danger" @click="handlerBatchDelete">
+        {{ $t('common.batchDelete') }}
+      </el-button>
       <el-button type="primary" @click="goImportPage">
         {{ $t('excel.importExcel') }}</el-button
       >
@@ -8,7 +11,9 @@
         {{ $t('excel.exportExcel') }}
       </el-button>
     </div>
-    <el-table :data="tableData" border>
+    <el-table :data="tableData" border @selection-change="handleSelectionChange"
+      >>
+      <el-table-column type="selection" width="55" />
       <el-table-column
         :label="$t('userManage.name')"
         prop="username"
@@ -26,6 +31,18 @@
         :label="$t('userManage.openTime')"
         prop="openTime"
       ></el-table-column>
+      <el-table-column :label="$t('common.operate')">
+        <template v-slot="{ row }">
+          <el-popconfirm
+            :title="$t('userManage.deleteTips', { name: row.username })"
+            @confirm="deleteUser(row.id)"
+          >
+            <template #reference>
+              <el-button type="danger">{{ $t('common.delete') }}</el-button>
+            </template>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="pagination-box">
       <el-pagination
@@ -47,10 +64,16 @@ export default { name: 'UserManage' }
 
 <script setup lang="ts">
 import { UserMange } from '@/api/interface/userManage'
-import { getUserManageList } from '@/api/modules/userManage'
+import {
+  deleteUserById,
+  getUserManageList,
+  batchDeleteUserByIds
+} from '@/api/modules/userManage'
+import { ElMessage } from 'element-plus'
 import { onActivated, ref } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { useI18n } from 'vue-i18n'
+const i18n = useI18n()
 const tableData = ref<UserMange.UserManage[]>([])
 const currentPage = ref(1)
 const pageSize = ref(10)
@@ -85,6 +108,37 @@ const getRoleName = (roles: UserMange.Roles[]) => {
 const router = useRouter()
 const goImportPage = () => {
   router.push({ name: 'import' })
+}
+
+const deleteUser = async (id: number) => {
+  deleteUserById(id).then((res) => {
+    if (res.code === 200) {
+      ElMessage.success(i18n.t('tips.deleteSuccess'))
+      handleCurrentPage(1)
+    }
+  })
+}
+
+// 多选操作
+const multipleSelection = ref<UserMange.UserManage[]>([])
+const handleSelectionChange = (val: UserMange.UserManage[]) => {
+  multipleSelection.value = val
+}
+
+// 批量删除
+
+const handlerBatchDelete = () => {
+  if (!multipleSelection.value.length) {
+    ElMessage.warning(i18n.t('tips.multipleSelectionTips'))
+    return
+  }
+  const ids = multipleSelection.value.map((item) => item.id)
+  batchDeleteUserByIds(ids).then((res) => {
+    if (res.code === 200) {
+      ElMessage.success(i18n.t('tips.deleteSuccess'))
+      handleCurrentPage(1)
+    }
+  })
 }
 </script>
 

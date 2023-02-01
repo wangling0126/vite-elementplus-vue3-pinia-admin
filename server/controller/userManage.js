@@ -40,6 +40,34 @@ class UserManage {
       }
     }
   }
+  async batchDeleteUserByIds(ctx) {
+    const ids = ctx.request.body
+    console.log(ids, 'ids')
+    if (!ids || !ids.length) {
+      ctx.body = {
+        code: 408,
+        message: '参数不对',
+        data: ''
+      }
+      return
+    }
+    await userModel.batchDeleteUserByIds(ids)
+    ctx.body = {
+      code: 200,
+      message: '',
+      data: null
+    }
+  }
+  async deleteUserById(ctx) {
+    const id = ctx.request.body.id
+    console.log(id, 'id')
+    await userModel.deleteUserById(id)
+    ctx.body = {
+      code: 200,
+      message: '',
+      data: null
+    }
+  }
 }
 
 function isNotValidRoleIds(ids, uploadData) {

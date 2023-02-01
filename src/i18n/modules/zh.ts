@@ -36,6 +36,15 @@ export default {
   灰色模式: '灰色模式',
   国际化: '国际化',
   中文: '中文',
+  common: {
+    operate: '操作',
+    delete: '删除',
+    batchDelete: '批量删除'
+  },
+  tips: {
+    multipleSelectionTips: '至少勾选一个',
+    deleteSuccess: '删除成功'
+  },
   tagsView: {
     refresh: '刷新',
     closeRight: '关闭右侧',
@@ -57,6 +66,7 @@ export default {
     name: '姓名',
     mobile: '联系方式',
     roles: '角色',
-    openTime: '开通时间'
+    openTime: '开通时间',
+    deleteTips: '你确定删除名字【{name}】吗?'
   }
 }

@@ -36,6 +36,15 @@ export default {
   灰色模式: 'Grey mode',
   国际化: 'internationalization',
   中文: 'Chinese',
+  common: {
+    operate: 'operate',
+    delete: 'delete',
+    batchDelete: 'batch delete'
+  },
+  tips: {
+    multipleSelectionTips: 'Check at least one',
+    deleteSuccess: 'delete success'
+  },
   tagsView: {
     refresh: 'refresh',
     closeRight: 'closeRight',
@@ -57,6 +66,7 @@ export default {
     name: 'name',
     mobile: 'mobile',
     roles: 'roles',
-    openTime: 'openTime'
+    openTime: 'openTime',
+    deleteTips: 'Are you sure to delete { name }?'
   }
 }

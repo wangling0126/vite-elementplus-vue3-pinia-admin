@@ -63,7 +63,7 @@ const generateData = (results: IExcelData[]) => {
     const userInfo: { [propName: string]: string } = {}
     Object.keys(item).forEach((key) => {
       if (USER_RELATIONS[key] === 'openTime') {
-        userInfo[USER_RELATIONS[key]] = formatDate(item[key])
+        userInfo[USER_RELATIONS[key]] = formatDate(+item[key])
       } else {
         userInfo[USER_RELATIONS[key]] = item[key]
       }
