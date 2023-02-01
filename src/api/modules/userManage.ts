@@ -18,3 +18,7 @@ export const batchDeleteUserByIds = (ids: number[]) => {
     ids
   )
 }
+
+export const getAllUserManageList = () => {
+  return request.get<UserMange.ResList>('/userManage/getAllUserManageList')
+}

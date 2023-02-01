@@ -20,6 +20,7 @@
     "cz-conventional-changelog": "3.3.0",
     "dayjs": "^1.11.7",
     "element-plus": "^2.2.21",
+    "file-saver": "^2.0.5",
     "koa-jwt": "^4.0.3",
     "path-browserify": "^1.0.1",
     "pinia": "^2.0.24",

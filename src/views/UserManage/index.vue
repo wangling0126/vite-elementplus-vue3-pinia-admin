@@ -7,7 +7,7 @@
       <el-button type="primary" @click="goImportPage">
         {{ $t('excel.importExcel') }}</el-button
       >
-      <el-button type="success">
+      <el-button type="success" @click="handleExcel">
         {{ $t('excel.exportExcel') }}
       </el-button>
     </div>
@@ -67,12 +67,14 @@ import { UserMange } from '@/api/interface/userManage'
 import {
   deleteUserById,
   getUserManageList,
-  batchDeleteUserByIds
+  batchDeleteUserByIds,
+  getAllUserManageList
 } from '@/api/modules/userManage'
 import { ElMessage } from 'element-plus'
 import { onActivated, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { export_json_to_excel } from '@/utils/Export2Excel'
 const i18n = useI18n()
 const tableData = ref<UserMange.UserManage[]>([])
 const currentPage = ref(1)
@@ -138,6 +140,33 @@ const handlerBatchDelete = () => {
       ElMessage.success(i18n.t('tips.deleteSuccess'))
       handleCurrentPage(1)
     }
+  })
+}
+
+const formatDataTwoArray = (data: UserMange.UserManage[]) => {
+  return data.reduce((result: string[][], item) => {
+    const { username, mobile, roles, openTime } = item
+    const roleStr = roles.map((item) => item.rolesName).join(',')
+    result.push([username, mobile, roleStr, openTime])
+    return result
+  }, [])
+}
+// 导出excel
+const handleExcel = async () => {
+  const res = await getAllUserManageList()
+  const data = res.data.data
+  console.log(data)
+  export_json_to_excel({
+    // excel 表头
+    header: ['姓名', '联系方式', '角色', '开通时间'],
+    // excel 数据（二维数组结构）
+    data: formatDataTwoArray(data),
+    // 文件名称
+    filename: '用户管理表',
+    // 是否自动列宽
+    autoWidth: true,
+    // 文件类型
+    bookType: 'xlsx'
   })
 }
 </script>

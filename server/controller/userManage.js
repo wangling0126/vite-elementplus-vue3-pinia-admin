@@ -20,6 +20,21 @@ class UserManage {
       }
     }
   }
+  async getAllUserManageList(ctx) {
+    const data = await userModel.getAllUserManageList()
+    const allRoles = await userModel.getAllRoles()
+    data.forEach((item) => {
+      const rolesId = item.rolesId.split(',')
+      item.roles = allRoles.filter((item) => rolesId.includes(item.id + ''))
+    })
+    ctx.body = {
+      code: 200,
+      message: '请求成功',
+      data: {
+        data
+      }
+    }
+  }
   async userBatchImport(ctx) {
     const allRolesId = await userModel.getAllRoleIds()
     const data = ctx.request.body

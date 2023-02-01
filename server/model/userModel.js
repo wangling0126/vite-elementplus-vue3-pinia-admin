@@ -8,6 +8,10 @@ class UserModel {
       }, ${size}`
     )
   }
+  // 获取所有用户
+  async getAllUserManageList() {
+    return await query(`SELECT * FROM user where delete_flag = '0' `)
+  }
   async getUserManageTotal() {
     return await query(
       `SELECT count('*') total FROM user where delete_flag = '0' `
