@@ -14,6 +14,10 @@ import { createPinia } from 'pinia'
 export const app = createApp(App)
 // 自动注册全局组件
 import regGlobalComponent from '@/components/common/regGlobalComponent'
+// 自动注册全局指令
+import installDirectives from '@/directives/index'
+installDirectives(app)
+
 declare module 'pinia' {
   export interface PiniaCustomProperties {
     router: Router
@@ -27,3 +31,4 @@ pinia.use(({ store }) => {
 app.use(router).use(I18n).use(pinia).use(regGlobalComponent).mount('#app')
 
 installElementPuls(app)
+console.log(app)

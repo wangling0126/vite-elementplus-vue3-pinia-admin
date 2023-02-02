@@ -136,6 +136,25 @@ const privateRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/function',
+    component: layout,
+    redirect: '/function/print',
+    meta: {
+      title: 'function',
+      icon: 'article'
+    },
+    children: [
+      {
+        path: '/function/print',
+        component: () => import('@/views/PrintPage/index.vue'),
+        meta: {
+          title: 'PrintPage',
+          icon: 'article-ranking'
+        }
+      }
+    ]
   }
 ]
 

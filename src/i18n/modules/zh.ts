@@ -25,7 +25,9 @@ export default {
     articleCreate: '创建文章',
     articleRanking: '文章排名',
     articleDetail: '文章详情',
-    articleEditor: '文章编辑'
+    articleEditor: '文章编辑',
+    function: '常用功能',
+    PrintPage: '打印'
   },
   首页: '首页',
   主题改变: '主题改变',

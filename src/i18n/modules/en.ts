@@ -25,7 +25,9 @@ export default {
     articleCreate: 'articleCreate',
     articleRanking: 'articleRanking',
     articleDetail: 'articleDetail',
-    articleEditor: 'articleEditor'
+    articleEditor: 'articleEditor',
+    function: 'function',
+    PrintPage: 'PrintPage'
   },
   首页: 'Home',
   主题改变: 'theme change',

@@ -155,7 +155,6 @@ const formatDataTwoArray = (data: UserMange.UserManage[]) => {
 const handleExcel = async () => {
   const res = await getAllUserManageList()
   const data = res.data.data
-  console.log(data)
   export_json_to_excel({
     // excel 表头
     header: ['姓名', '联系方式', '角色', '开通时间'],

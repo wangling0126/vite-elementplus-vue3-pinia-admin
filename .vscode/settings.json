@@ -5,7 +5,10 @@
     "source.fixAll.eslint": true
   },
     // 为了避免和 eslint 冲突，讲编辑器默认的代码检查规则关闭（如果开启了）
-  "editor.formatOnSave": false,   
+  "editor.formatOnSave": false,
   // 默认格式化工具选择prettier
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  }
 }

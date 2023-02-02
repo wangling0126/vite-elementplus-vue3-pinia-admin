@@ -1,3 +1,5 @@
 declare module 'css-color-function'
 declare module 'xlsx'
 declare module 'file-saver'
+declare module 'vue3-print-nb'
+declare module 'mockjs'
