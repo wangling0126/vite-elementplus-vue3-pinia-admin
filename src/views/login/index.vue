@@ -8,6 +8,7 @@
           type="text"
           v-model="formData.username"
           :placeholder="$t('login.用户名')"
+          class="input"
         >
           <template v-slot:prefix>
             <svg-icon icon="user" :color="iconColor"></svg-icon>
@@ -20,6 +21,7 @@
           :type="showPassword ? `text` : 'password'"
           v-model="formData.password"
           :placeholder="$t('login.密码')"
+          class="input"
         >
           <template v-slot:prefix>
             <svg-icon icon="password" :color="iconColor"></svg-icon>
@@ -140,6 +142,19 @@ const doLogin = () => {
   }
   .user-icon {
     color: v-bind(iconColor);
+  }
+}
+// 解决输入框自动填充
+.input :deep(.el-input__inner) {
+  box-shadow: inset 0 0 0 1000px transparent !important;
+  color: #fff !important;
+  &:-internal-autofill-previewed {
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+  &:-internal-autofill-selected {
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s !important;
   }
 }
 </style>
