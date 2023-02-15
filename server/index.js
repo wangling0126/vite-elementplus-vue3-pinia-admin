@@ -3,10 +3,11 @@ import bodyParser from 'koa-bodyparser'
 import router from './router/index.js'
 import koajwt from 'koa-jwt'
 import { jwtConfig } from './config/index.js'
-
+import { generateKey } from './utils/crypto.js' //引入密钥生成工具
 const app = new koa()
 app.use(bodyParser())
 
+generateKey()
 // 错误处理
 app.use((ctx, next) => {
   return next().catch((err) => {
@@ -29,7 +30,12 @@ app.use(
     secret: jwtConfig.SECRET
   }).unless({
     // 配置白名单
-    path: [/\/user\/register/, /\/user\/login/, /\/userManage\/getList/]
+    path: [
+      /\/user\/register/,
+      /\/user\/login/,
+      /\/userManage\/getList/,
+      /\/p1\/getPublicKey/
+    ]
   })
 )
 //  注册路由

@@ -49,8 +49,12 @@ import { useUserStore } from '@/stores/modules/user'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import LanguageSelect from '@/components/LanguageSelect/index.vue'
+import { getPublicKey } from '@/api/modules/public'
+import { useGlobalStore } from '@/stores/global'
+import { encrypt } from '@/utils/jsencrypt'
 const i18n = useI18n()
 const router = useRouter()
+const globalDtore = useGlobalStore()
 
 const userStore = useUserStore()
 const formData = reactive({
@@ -101,9 +105,13 @@ const doLogin = () => {
   if (!formRef.value) {
     return
   }
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     if (valid) {
-      userStore.login(formData).then((res) => {
+      const res = await getPublicKey()
+      res.data && globalDtore.setPublicKey(res.data as string)
+      const username = encrypt(formData.username)
+      const password = encrypt(formData.password)
+      userStore.login({ username, password }).then((res) => {
         if (res.code === 200) {
           router.replace({
             name: 'layout'

@@ -1,23 +1,16 @@
 import jwt from 'jsonwebtoken'
 import { jwtConfig } from '../config/index.js'
-const userList = [
-  {
-    username: 'wangling',
-    password: '123456'
-  },
-  {
-    username: '张东',
-    password: 'a514054'
-  }
-]
+import { decryptCode } from '../utils/crypto.js'
+import userModel from '../model/userModel.js'
 
 class User {
-  login(ctx) {
-    const { username, password } = ctx.request.body
-    const result = userList.find(
-      (item) => item.username === username && item.password === password
-    )
-    if (result) {
+  async login(ctx) {
+    let { username, password } = ctx.request.body
+    username = decryptCode(username)
+    password = decryptCode(password)
+    const user = await userModel.queryUser(username, password)
+    console.log(user, username, password)
+    if (user.length) {
       const token = jwt.sign(
         {
           username: username
@@ -31,7 +24,8 @@ class User {
         code: 200,
         message: '登录成功',
         data: {
-          token
+          token,
+          userInfo: user[0]
         }
       })
     }

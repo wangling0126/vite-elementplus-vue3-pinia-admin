@@ -27,7 +27,8 @@ export default {
     articleDetail: '文章详情',
     articleEditor: '文章编辑',
     function: '常用功能',
-    PrintPage: '打印'
+    PrintPage: '打印',
+    userMenu: '菜单管理'
   },
   首页: '首页',
   主题改变: '主题改变',
@@ -70,5 +71,10 @@ export default {
     roles: '角色',
     openTime: '开通时间',
     deleteTips: '你确定删除名字【{name}】吗?'
+  },
+  auth: {
+    addRootNode: '新增根节点',
+    AppendChildNode: '增加子节点',
+    EditNode: '编辑节点'
   }
 }

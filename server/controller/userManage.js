@@ -47,7 +47,6 @@ class UserManage {
       }
     } else {
       const result = await userModel.insertUserManage(data)
-      console.log(result)
       ctx.body = {
         code: 200,
         message: '插入成功',

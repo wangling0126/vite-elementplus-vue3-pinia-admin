@@ -79,6 +79,14 @@ const privateRoutes = [
         }
       },
       {
+        path: '/user/menu',
+        component: () => import('@/views/UserMenu/index.vue'),
+        meta: {
+          title: 'userMenu',
+          icon: 'permission'
+        }
+      },
+      {
         path: '/user/info/:id',
         name: 'userInfo',
         component: () => import('@/views/UserInfo/index.vue'),

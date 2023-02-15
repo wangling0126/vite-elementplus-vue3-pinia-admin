@@ -17,6 +17,12 @@ class UserModel {
       `SELECT count('*') total FROM user where delete_flag = '0' `
     )
   }
+  // 用户账号和密码查询是否存在
+  async queryUser(username, password) {
+    return await query(
+      `select * from user u where username = '${username}' and password = '${password}' and delete_flag = '0';`
+    )
+  }
   async getAllRoles() {
     return await query(`SELECT * FROM roles`)
   }

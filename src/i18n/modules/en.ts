@@ -27,7 +27,8 @@ export default {
     articleDetail: 'articleDetail',
     articleEditor: 'articleEditor',
     function: 'function',
-    PrintPage: 'PrintPage'
+    PrintPage: 'PrintPage',
+    userMenu: 'menu admin'
   },
   首页: 'Home',
   主题改变: 'theme change',
@@ -70,5 +71,10 @@ export default {
     roles: 'roles',
     openTime: 'openTime',
     deleteTips: 'Are you sure to delete { name }?'
+  },
+  auth: {
+    addRootNode: 'add root node',
+    AppendChildNode: 'add chlid node',
+    EditNode: 'edit node'
   }
 }

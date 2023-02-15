@@ -19,6 +19,7 @@ specifiers:
   eslint-plugin-vue: ^9.7.0
   file-saver: ^2.0.5
   husky: ^8.0.2
+  jsencrypt: ^3.3.1
   koa-jwt: ^4.0.3
   lint-staged: ^13.0.3
   mockjs: ^1.1.0
@@ -47,6 +48,7 @@ dependencies:
   dayjs: 1.11.7
   element-plus: registry.npmmirror.com/element-plus/2.2.21_vue@3.2.45
   file-saver: 2.0.5
+  jsencrypt: 3.3.1
   koa-jwt: registry.npmmirror.com/koa-jwt/4.0.3
   path-browserify: registry.npmmirror.com/path-browserify/1.0.1
   pinia: registry.npmmirror.com/pinia/2.0.24_zwu2zepfy3m6u2gunxlolp35gi
@@ -474,6 +476,10 @@ packages:
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
+
+  /jsencrypt/3.3.1:
+    resolution: {integrity: sha512-dVvV54GdFuJgmEKn+oBiaifDMen4p6o6j/lJh0OVMcouME8sST0bJ7bldIgKBQk4za0zyGn0/pm4vOznR25mLw==}
+    dev: false
 
   /magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}

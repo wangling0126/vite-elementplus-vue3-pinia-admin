@@ -5,7 +5,8 @@ export const useGlobalStore = defineStore('global', {
   state() {
     return {
       sidebarOpened: true, // 菜单折叠还是展开
-      language: LStorage.get(LANGUAGE) || 'zh'
+      language: LStorage.get(LANGUAGE) || 'zh',
+      publicKey: ''
     }
   },
   actions: {
@@ -18,6 +19,12 @@ export const useGlobalStore = defineStore('global', {
     setLanguage(lang: string) {
       LStorage.set(LANGUAGE, lang)
       this.language = lang
+    },
+    /**
+     * rsa公钥
+     */
+    setPublicKey(key: string) {
+      this.publicKey = key
     }
   }
 })
