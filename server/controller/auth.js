@@ -3,20 +3,12 @@ class Auth {
   // 获取所有权限列表
   async getAllRolesList(ctx) {
     const roleList = await authModel.getAllRolesList()
-    ctx.body = {
-      code: 200,
-      message: '',
-      data: roleList
-    }
+    ctx.commonSuccessWithData(roleList)
   }
   // 获取菜单列表
   async getAllMenuList(ctx) {
     const menuList = await authModel.getAllMenuList()
-    ctx.body = {
-      code: 200,
-      message: '',
-      data: transMenuTree(menuList)
-    }
+    ctx.commonSuccessWithData(transMenuTree(menuList))
   }
 }
 

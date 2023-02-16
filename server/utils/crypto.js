@@ -17,12 +17,12 @@ function generateKey() {
   const PRIVATE_KEY = key.exportKey('pkcs8-private-pem')
   writeFile(resolve(__dirname, '../cert/public.pem'), PUBLIC_KEY, (err) => {
     if (!err) {
-      console.log('公钥写入成功')
+      // console.log('公钥写入成功')
     }
   })
   writeFile(resolve(__dirname, '../cert/private.key'), PRIVATE_KEY, (err) => {
     if (!err) {
-      console.log('私钥写入成功')
+      // console.log('私钥写入成功')
     }
   })
 }

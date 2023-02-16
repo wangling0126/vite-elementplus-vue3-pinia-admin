@@ -9,16 +9,12 @@ class UserManage {
       const rolesId = item.rolesId.split(',')
       item.roles = allRoles.filter((item) => rolesId.includes(item.id + ''))
     })
-    ctx.body = {
-      code: 200,
-      message: '请求成功',
-      data: {
-        data,
-        total: totalRes[0].total,
-        current: +current,
-        size: +size
-      }
-    }
+    ctx.commonSuccessWithData({
+      data,
+      total: totalRes[0].total,
+      current: +current,
+      size: +size
+    })
   }
   async getAllUserManageList(ctx) {
     const data = await userModel.getAllUserManageList()
@@ -27,13 +23,9 @@ class UserManage {
       const rolesId = item.rolesId.split(',')
       item.roles = allRoles.filter((item) => rolesId.includes(item.id + ''))
     })
-    ctx.body = {
-      code: 200,
-      message: '请求成功',
-      data: {
-        data
-      }
-    }
+    ctx.commonSuccessWithData({
+      data
+    })
   }
   async userBatchImport(ctx) {
     const allRolesId = await userModel.getAllRoleIds()
@@ -46,17 +38,14 @@ class UserManage {
         data: []
       }
     } else {
-      const result = await userModel.insertUserManage(data)
-      ctx.body = {
-        code: 200,
-        message: '插入成功',
-        data: []
-      }
+      await userModel.insertUserManage(data)
+      ctx.commonSuccessWithoutData({
+        message: '插入成功'
+      })
     }
   }
   async batchDeleteUserByIds(ctx) {
     const ids = ctx.request.body
-    console.log(ids, 'ids')
     if (!ids || !ids.length) {
       ctx.body = {
         code: 408,
@@ -74,7 +63,6 @@ class UserManage {
   }
   async deleteUserById(ctx) {
     const id = ctx.request.body.id
-    console.log(id, 'id')
     await userModel.deleteUserById(id)
     ctx.body = {
       code: 200,

@@ -1,3 +1,4 @@
+import { useGlobalStore } from '@/stores/global'
 import { useUserStore } from '@/stores/modules/user'
 import { LStorage } from '@/utils/storage'
 import axios, {
@@ -9,7 +10,6 @@ import axios, {
 } from 'axios'
 import { ResultData } from './interface'
 import { ElMessage } from 'element-plus'
-import router from '@/router'
 
 const config: CreateAxiosDefaults = {
   baseURL: import.meta.env.VITE_API_URL as string,
@@ -27,7 +27,8 @@ class RequestHttp {
         if (!config.headers) {
           config.headers = {}
         }
-        config.headers!.Authorization = 'Bearer ' + token // 留意这里的 Authorization
+        config.headers.Authorization = 'Bearer ' + token // 留意这里的 Authorization
+        config.headers.lang = useGlobalStore().language
         return config
       },
       (error: AxiosError) => {
@@ -37,12 +38,12 @@ class RequestHttp {
 
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
-        const { code, message } = response.data || {}
+        const { code, msg } = response.data || {}
         if (code === 401) {
           const userStore = useUserStore()
           userStore.logout()
         } else if (code !== 200) {
-          ElMessage.error(message || '服务出小差了~~')
+          ElMessage.error(msg || '服务出小差了~~')
         }
         return response.data
       },

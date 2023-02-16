@@ -9,16 +9,27 @@
       <el-tree :data="menuTree" :props="defaultProps" default-expand-all>
         <template #default="{ node, data }">
           <div class="menu-item">
-            <span>{{ node.label }}</span>
+            <div>
+              <span>{{ node.label }}</span>
+              <svg-icon
+                :icon="data.status === 0 ? 'disabled' : 'able'"
+                class="icon-status"
+                :class="data.status === 0 ? 'disabled-class' : 'able-class'"
+              ></svg-icon>
+            </div>
+
             <span class="btn-group">
               <el-tooltip :content="$t('auth.AppendChildNode')" placement="top">
                 <svg-icon
                   icon="add"
-                  @click.stop="addChildNode(data)"
+                  @click.stop="handleAddChildNode(data)"
                 ></svg-icon>
               </el-tooltip>
               <el-tooltip :content="$t('auth.EditNode')" placement="top">
-                <svg-icon icon="edit"></svg-icon>
+                <svg-icon
+                  icon="edit"
+                  @click.stop="handleEditChildNode(node, data)"
+                ></svg-icon>
               </el-tooltip>
             </span>
           </div>
@@ -29,6 +40,7 @@
       v-model:visible="dialogVisible"
       :operationType="operationType"
       :parentNodeDetail="parentNodeDetail"
+      :currentEditNodeDetail="currentEditNodeDetail"
     />
   </div>
 </template>
@@ -50,7 +62,7 @@ const getMenuTree = async () => {
 }
 const defaultProps = {
   children: 'children',
-  label: 'name'
+  label: 'label'
 }
 getMenuTree()
 
@@ -58,17 +70,31 @@ const dialogVisible = ref(false)
 type OperationType = 'add' | 'edit'
 const operationType = ref<OperationType>('add')
 const parentNodeDetail = ref({})
+const currentEditNodeDetail = ref({})
 // 新增根节点
 const handleAddRootNode = () => {
   operationType.value = 'add'
   parentNodeDetail.value = {}
+  currentEditNodeDetail.value = {}
   dialogVisible.value = true
 }
 
 // 新增子节点
-const addChildNode = (data: Auth.ResMenu) => {
+const handleAddChildNode = (data: Auth.ResMenu) => {
   operationType.value = 'add'
   parentNodeDetail.value = data
+  currentEditNodeDetail.value = {}
+  dialogVisible.value = true
+}
+
+const handleEditChildNode = (
+  node: { parent: { data: {} } },
+  data: Auth.ResMenu
+) => {
+  console.log(node, data)
+  operationType.value = 'edit'
+  parentNodeDetail.value = data.parent_id === 0 ? {} : node.parent.data
+  currentEditNodeDetail.value = data
   dialogVisible.value = true
 }
 </script>
@@ -94,5 +120,14 @@ const addChildNode = (data: Auth.ResMenu) => {
   &:hover .btn-group {
     display: block;
   }
+}
+.icon-status {
+  margin-left: 5px;
+}
+.disabled-class {
+  color: red;
+}
+.able-class {
+  color: green;
 }
 </style>

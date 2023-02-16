@@ -8,8 +8,8 @@ export namespace Auth {
   }
   export interface ResMenu {
     id: number
-    name: string
-    descripition: string
+    routerName: string
+    label: string
     parent_id: number
     status: number
     create_time: string

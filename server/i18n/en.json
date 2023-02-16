@@ -1,0 +1,5 @@
+{
+  "request.ok": "request successful!",
+  "request.fail": "system has some error!",
+  "loginError": "username or password is error!"
+}

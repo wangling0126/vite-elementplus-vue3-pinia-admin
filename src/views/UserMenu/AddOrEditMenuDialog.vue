@@ -6,11 +6,11 @@
       label-width="100px"
       :rules="formRules"
     >
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="formData.name" />
+      <el-form-item label="路由名称" prop="routerName">
+        <el-input v-model="formData.routerName" />
       </el-form-item>
-      <el-form-item label="描述" prop="descripition">
-        <el-input v-model="formData.descripition" />
+      <el-form-item label="名称" prop="label">
+        <el-input v-model="formData.label" />
       </el-form-item>
       <el-form-item label="节点状态" prop="status">
         <el-select v-model="formData.status" style="width: 100%">
@@ -18,8 +18,8 @@
           <el-option label="停用" :value="0" />
         </el-select>
       </el-form-item>
-      <el-form-item label="父节点" prop="pname" v-if="!isRoot || isAdd">
-        <el-input v-model="formData.pname" :disabeld="true" />
+      <el-form-item label="父节点" prop="plabel" v-if="!isRoot || isAdd">
+        <el-input v-model="formData.plabel" :disabeld="true" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -42,7 +42,8 @@ import { computed, reactive, watch } from 'vue'
 const props = defineProps<{
   visible: boolean
   operationType?: string
-  parentNodeDetail: Auth.ResMenu
+  parentNodeDetail: Partial<Auth.ResMenu>
+  currentEditNodeDetail: Partial<Auth.ResMenu>
 }>()
 const emit = defineEmits(['update:visible'])
 
@@ -69,13 +70,13 @@ const dialogTitle = computed(() => {
 })
 
 const formData = reactive({
-  name: '',
-  descripition: '',
+  routerName: '',
+  label: '',
   status: 1,
-  pname: ''
+  plabel: ''
 })
 const formRules = reactive({
-  name: [{ required: true, message: '节点名字不为空', trigger: 'blur' }]
+  routerName: [{ required: true, message: '节点名字不为空', trigger: 'blur' }]
 })
 
 watch(
@@ -84,13 +85,14 @@ watch(
     if (!newVal) {
       return
     }
-    const { name, descripition, status } = props.parentNodeDetail
     if (isAdd.value) {
-      !isRoot.value && (formData.pname = name)
+      const { label } = props.parentNodeDetail
+      !isRoot.value && (formData.plabel = label || '')
     } else {
+      const { routerName, label, status } = props.currentEditNodeDetail
       Object.assign(formData, {
-        name,
-        descripition,
+        routerName,
+        label,
         status
       })
     }
