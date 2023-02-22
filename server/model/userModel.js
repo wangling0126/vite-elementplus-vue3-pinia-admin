@@ -1,11 +1,20 @@
 import { query } from '../mysql/query.js'
 class UserModel {
+  async getUserInfo(id) {
+    return await query(`select u.*,r.* from
+    (select id, username, mobile ,avatar, is_admin from user where id = ${id} ) as u
+      left join user_role ur  on u.id = ur.user_id
+      left join (select id as roleId, rolesName, name from roles ) as r on r.roleId  = ur.role_id ;`)
+  }
   //获取用户
   async getUserManageList(currentPage, size) {
     return await query(
-      `SELECT * FROM user where delete_flag = '0' limit ${
+      `select u.*,r.* from
+      (select id, username, mobile ,is_admin from user limit ${
         (currentPage - 1) * size
-      }, ${size}`
+      }, ${size}) as u
+        left join user_role ur  on u.id = ur.user_id
+        left join (select id as roleId, rolesName from roles ) as r on r.roleId  = ur.role_id `
     )
   }
   // 获取所有用户

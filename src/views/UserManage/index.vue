@@ -1,9 +1,9 @@
 <template>
   <div class="user-manage-container">
     <div class="button-group">
-      <el-button type="danger" @click="handlerBatchDelete">
+      <!-- <el-button type="danger" @click="handlerBatchDelete">
         {{ $t('common.batchDelete') }}
-      </el-button>
+      </el-button> -->
       <el-button type="primary" @click="goImportPage">
         {{ $t('excel.importExcel') }}</el-button
       >
@@ -11,9 +11,12 @@
         {{ $t('excel.exportExcel') }}
       </el-button>
     </div>
-    <el-table :data="tableData" border @selection-change="handleSelectionChange"
-      >>
-      <el-table-column type="selection" width="55" />
+    <el-table
+      :data="tableData"
+      border
+      @selection-change="handleSelectionChange"
+    >
+      <!-- <el-table-column type="selection" width="55" /> -->
       <el-table-column
         :label="$t('userManage.name')"
         prop="username"
@@ -27,22 +30,10 @@
           {{ getRoleName(row.roles) }}
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         :label="$t('userManage.openTime')"
         prop="openTime"
-      ></el-table-column>
-      <el-table-column :label="$t('common.operate')">
-        <template v-slot="{ row }">
-          <el-popconfirm
-            :title="$t('userManage.deleteTips', { name: row.username })"
-            @confirm="deleteUser(row.id)"
-          >
-            <template #reference>
-              <el-button type="danger">{{ $t('common.delete') }}</el-button>
-            </template>
-          </el-popconfirm>
-        </template>
-      </el-table-column>
+      ></el-table-column> -->
     </el-table>
     <div class="pagination-box">
       <el-pagination
@@ -112,14 +103,14 @@ const goImportPage = () => {
   router.push({ name: 'import' })
 }
 
-const deleteUser = async (id: number) => {
-  deleteUserById(id).then((res) => {
-    if (res.code === 200) {
-      ElMessage.success(i18n.t('tips.deleteSuccess'))
-      handleCurrentPage(1)
-    }
-  })
-}
+// const deleteUser = async (id: number) => {
+//   deleteUserById(id).then((res) => {
+//     if (res.code === 200) {
+//       ElMessage.success(i18n.t('tips.deleteSuccess'))
+//       handleCurrentPage(1)
+//     }
+//   })
+// }
 
 // 多选操作
 const multipleSelection = ref<UserMange.UserManage[]>([])
@@ -129,19 +120,19 @@ const handleSelectionChange = (val: UserMange.UserManage[]) => {
 
 // 批量删除
 
-const handlerBatchDelete = () => {
-  if (!multipleSelection.value.length) {
-    ElMessage.warning(i18n.t('tips.multipleSelectionTips'))
-    return
-  }
-  const ids = multipleSelection.value.map((item) => item.id)
-  batchDeleteUserByIds(ids).then((res) => {
-    if (res.code === 200) {
-      ElMessage.success(i18n.t('tips.deleteSuccess'))
-      handleCurrentPage(1)
-    }
-  })
-}
+// const handlerBatchDelete = () => {
+//   if (!multipleSelection.value.length) {
+//     ElMessage.warning(i18n.t('tips.multipleSelectionTips'))
+//     return
+//   }
+//   const ids = multipleSelection.value.map((item) => item.id)
+//   batchDeleteUserByIds(ids).then((res) => {
+//     if (res.code === 200) {
+//       ElMessage.success(i18n.t('tips.deleteSuccess'))
+//       handleCurrentPage(1)
+//     }
+//   })
+// }
 
 const formatDataTwoArray = (data: UserMange.UserManage[]) => {
   return data.reduce((result: string[][], item) => {

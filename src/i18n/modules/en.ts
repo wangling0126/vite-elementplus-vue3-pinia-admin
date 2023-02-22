@@ -75,6 +75,8 @@ export default {
   auth: {
     addRootNode: 'add root node',
     AppendChildNode: 'add chlid node',
-    EditNode: 'edit node'
+    EditNode: 'edit node',
+    deleteNode: 'delete node',
+    deleteNodeTips: `is delete 【{nodeName}】?`
   }
 }

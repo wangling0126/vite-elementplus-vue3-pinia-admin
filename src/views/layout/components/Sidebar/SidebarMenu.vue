@@ -22,15 +22,15 @@ import SidebarItem from './SidebarItem.vue'
 import { useGlobalStore } from '@/stores/global'
 import { filterRouters, generateMenus } from '@/utils/route'
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useVariablesStore } from '@/stores/modules/variables'
 import { storeToRefs } from 'pinia'
-
+import { usePermission } from '@/stores/modules/permission'
+const permissionStore = usePermission()
 const store = useGlobalStore()
 const { sidebarOpened } = storeToRefs(store)
-const router = useRouter()
 const routes = computed(() => {
-  const filterRoutes = filterRouters(router.getRoutes())
+  const filterRoutes = filterRouters(permissionStore.menuList)
   return generateMenus(filterRoutes)
 })
 const route = useRoute()

@@ -1,8 +1,5 @@
 <template>
   <div class="role-list">
-    <div class="page-header-button">
-      <el-button type="success"> 新增角色 </el-button>
-    </div>
     <el-table :data="roleList" style="width: 100%" border>
       <el-table-column prop="rolesName" label="名称" />
       <el-table-column prop="status" label="状态">
@@ -14,6 +11,7 @@
       </el-table-column>
       <el-table-column prop="description" label="描述" />
     </el-table>
+    <!-- <ConfigurationMenu v-model:visible="dialogVisible" /> -->
   </div>
 </template>
 
@@ -25,6 +23,7 @@ export default { name: 'RoleList' }
 import { Auth } from '@/api/interface/auth'
 import { getAllRolesList } from '@/api/modules/auth'
 import { ref } from 'vue'
+// import ConfigurationMenu from './components/ConfigurationMenu.vue'
 
 const roleList = ref<Auth.ResRoles[]>([])
 const getList = async () => {
@@ -32,6 +31,13 @@ const getList = async () => {
   roleList.value = res.data
 }
 getList()
+
+/**
+ * @description: 配置菜单
+ * @param {Auth.ResMenu} row
+ * @return {*} undefined
+ */
+// const configureMenu = (row: Auth.ResMenu) => {}
 </script>
 
 <style scoped lang="scss"></style>

@@ -10,7 +10,10 @@
         <template #default="{ node, data }">
           <div class="menu-item">
             <div>
-              <span>{{ node.label }}</span>
+              <span
+                >{{ node.label }}
+                <span class="router-name">{{ data.routerName }}</span></span
+              >
               <svg-icon
                 :icon="data.status === 0 ? 'disabled' : 'able'"
                 class="icon-status"
@@ -31,6 +34,16 @@
                   @click.stop="handleEditChildNode(node, data)"
                 ></svg-icon>
               </el-tooltip>
+              <el-tooltip :content="$t('auth.deleteNode')" placement="top">
+                <el-popconfirm
+                  :title="$t('auth.deleteNodeTips', { nodeName: data.label })"
+                  @confirm="handleDeleteNode(data.id)"
+                >
+                  <template #reference>
+                    <svg-icon icon="delete" @click.stop></svg-icon>
+                  </template>
+                </el-popconfirm>
+              </el-tooltip>
             </span>
           </div>
         </template>
@@ -41,6 +54,7 @@
       :operationType="operationType"
       :parentNodeDetail="parentNodeDetail"
       :currentEditNodeDetail="currentEditNodeDetail"
+      @successCallback="getMenuTree"
     />
   </div>
 </template>
@@ -51,7 +65,7 @@ export default { name: 'UserMenu' }
 
 <script setup lang="ts">
 import { Auth } from '@/api/interface/auth'
-import { getAllMenuList } from '@/api/modules/auth'
+import { deleteMenuById, getAllMenuList } from '@/api/modules/auth'
 import AddOrEditMenuDialog from './AddOrEditMenuDialog.vue'
 import { ref } from 'vue'
 
@@ -91,11 +105,15 @@ const handleEditChildNode = (
   node: { parent: { data: {} } },
   data: Auth.ResMenu
 ) => {
-  console.log(node, data)
   operationType.value = 'edit'
   parentNodeDetail.value = data.parent_id === 0 ? {} : node.parent.data
   currentEditNodeDetail.value = data
   dialogVisible.value = true
+}
+
+const handleDeleteNode = async (id: number) => {
+  await deleteMenuById(id)
+  getMenuTree()
 }
 </script>
 
@@ -129,5 +147,9 @@ const handleEditChildNode = (
 }
 .able-class {
   color: green;
+}
+.router-name {
+  color: #a7a5a5;
+  font-size: 12px;
 }
 </style>

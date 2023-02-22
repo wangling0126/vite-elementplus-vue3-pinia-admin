@@ -28,7 +28,7 @@ function routerResponseMiddle(option = {}) {
      * 通用成功且不带数据
      * @param data
      */
-    ctx.commonSuccessWithoutData = function ({ message }) {
+    ctx.commonSuccessWithoutData = function ({ message } = {}) {
       ctx.type = option.type || 'json'
       ctx.body = {
         code: option.successCode || 200,
@@ -41,7 +41,7 @@ function routerResponseMiddle(option = {}) {
      * 自定义成功返回
      * @param data
      */
-    ctx.customerSuccess = function ({ msg, code, data }) {
+    ctx.customerSuccess = function ({ msg, code, data } = {}) {
       ctx.type = option.type || 'json'
       ctx.body = {
         code: code || 200,
@@ -56,7 +56,7 @@ function routerResponseMiddle(option = {}) {
      * @param msg 错误信息，默认为fail
      * @param code 错误码，默认为500
      */
-    ctx.error = function ({ msg, code }) {
+    ctx.error = function ({ msg, code } = {}) {
       ctx.type = option.type || 'json'
       ctx.body = {
         code: code || option.failCode || 500,

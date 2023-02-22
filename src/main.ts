@@ -7,6 +7,7 @@ import router from './router/index'
 import type { Router } from 'vue-router'
 import './app.scss'
 import '@/styles/index.scss'
+import './permission'
 // 国际化
 import I18n from './i18n/index'
 import App from './App.vue'

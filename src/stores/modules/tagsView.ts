@@ -1,11 +1,11 @@
-import { router } from '@/router'
+// import { router } from '@/router'
 import { TAGS_VIEW } from '@/constant'
 import { LStorage } from '@/utils/storage'
 import { defineStore } from 'pinia'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 type RemoveTagsViewParams = {
-  type: 'index' | 'other' | 'right'
-  index: number
+  type: 'index' | 'other' | 'right' | 'all'
+  index?: number
 }
 export const useTagsViewStore = defineStore('tagsView', {
   state() {
@@ -54,8 +54,11 @@ export const useTagsViewStore = defineStore('tagsView', {
       } else if (type === 'right') {
         // 关闭右侧
         this.tagsViewList.splice(index + 1)
+      } else if (type === 'all') {
+        // 关闭所有
+        this.tagsViewList = []
       }
-      this.jumpRoute()
+      type !== 'all' && this.jumpRoute()
       LStorage.set(TAGS_VIEW, this.tagsViewList)
     }
   }

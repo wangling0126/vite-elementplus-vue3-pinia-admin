@@ -10,6 +10,56 @@ class Auth {
     const menuList = await authModel.getAllMenuList()
     ctx.commonSuccessWithData(transMenuTree(menuList))
   }
+  // 检查菜单routerName是否重复
+  async checkRepeatMenuRouterName(ctx) {
+    const repeatList = await authModel.checkRepeatMenuRouterName(
+      ctx.request.query.routerName
+    )
+    ctx.commonSuccessWithData(transMenuTree(repeatList))
+  }
+  // 增加菜单
+  async addMenu(ctx) {
+    const { routerName, label, status, parent_id, parent_path } =
+      ctx.request.body
+    authModel
+      .addMenu({
+        routerName,
+        label,
+        status,
+        parent_id
+      })
+      .then((res) => {
+        const insertId = res.insertId
+        authModel.updateMenuPath({
+          id: insertId,
+          path: parent_path ? `${parent_path}-${insertId}` : insertId
+        })
+      })
+
+    ctx.commonSuccessWithoutData()
+  }
+  // 更新菜单
+  async updateMenu(ctx) {
+    const { routerName, label, status, id } = ctx.request.body
+    const menuList = await authModel.getAllMenuList()
+    const ids = getSubIds(menuList, id).filter((item) => item !== id)
+
+    await authModel.updateMenu({ routerName, label, status, id })
+    ids.forEach(async (item) => {
+      await authModel.updateMenuStatus({ id: item, status })
+    })
+    return ctx.commonSuccessWithoutData()
+  }
+  // 删除菜单通过id
+  async deleteMenuById(ctx) {
+    const { id } = ctx.request.query
+    const menuList = await authModel.getAllMenuList()
+    getSubIds(menuList, id).forEach(async (id) => {
+      await authModel.deleteMenuById(id)
+    })
+
+    return ctx.commonSuccessWithoutData()
+  }
 }
 
 function transMenuTree(data) {
@@ -34,5 +84,19 @@ function transMenuTree(data) {
     }
   })
   return result //数组里的对象和data是共享的
+}
+
+function getSubIds(data, id) {
+  const allDeletePath = data
+    .map((item) => item.path)
+    .filter((path) => path.split('-').includes(id + ''))
+  let allDeleteIds = []
+  allDeletePath.forEach((path) => {
+    const list = path.split('-')
+    const len = list.length
+    const id = list[len - 1]
+    allDeleteIds.push(id)
+  })
+  return [...new Set(allDeleteIds)]
 }
 export default new Auth()

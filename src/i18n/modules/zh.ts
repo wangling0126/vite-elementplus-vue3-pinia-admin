@@ -15,7 +15,7 @@ export default {
   },
   route: {
     profile: '简介',
-    user: '用户',
+    user: '权限管理',
     userManage: '用户管理',
     roleList: '角色管理列表',
     permissionList: '权限管理列表',
@@ -75,6 +75,8 @@ export default {
   auth: {
     addRootNode: '新增根节点',
     AppendChildNode: '增加子节点',
-    EditNode: '编辑节点'
+    EditNode: '编辑节点',
+    deleteNode: '删除节点',
+    deleteNodeTips: `确定删除节点【{nodeName}】吗？`
   }
 }

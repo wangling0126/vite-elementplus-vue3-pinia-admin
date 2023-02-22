@@ -5,6 +5,7 @@ export namespace Auth {
     status: string
     create_time: string
     description: string
+    name: string
   }
   export interface ResMenu {
     id: number

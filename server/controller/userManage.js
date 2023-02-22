@@ -2,15 +2,28 @@ import userModel from '../model/userModel.js'
 class UserManage {
   async getUserManageList(ctx) {
     const { current, size } = ctx.request.query
-    const data = await userModel.getUserManageList(current || 1, size || 10)
-    const allRoles = await userModel.getAllRoles()
+    let data = await userModel.getUserManageList(current || 1, size || 10)
     const totalRes = await userModel.getUserManageTotal()
+    const newDataObj = {}
     data.forEach((item) => {
-      const rolesId = item.rolesId.split(',')
-      item.roles = allRoles.filter((item) => rolesId.includes(item.id + ''))
+      const { id, roleId, rolesName, ...rest } = item
+      if (newDataObj[id]) {
+        newDataObj[id].roles.push({ roleId, rolesName })
+      } else {
+        newDataObj[id] = {
+          id,
+          ...rest,
+          roles: [
+            {
+              roleId,
+              rolesName
+            }
+          ]
+        }
+      }
     })
     ctx.commonSuccessWithData({
-      data,
+      data: Object.values(newDataObj),
       total: totalRes[0].total,
       current: +current,
       size: +size
@@ -23,6 +36,7 @@ class UserManage {
       const rolesId = item.rolesId.split(',')
       item.roles = allRoles.filter((item) => rolesId.includes(item.id + ''))
     })
+
     ctx.commonSuccessWithData({
       data
     })

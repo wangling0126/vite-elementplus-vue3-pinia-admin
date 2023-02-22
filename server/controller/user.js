@@ -9,11 +9,10 @@ class User {
     username = decryptCode(username)
     password = decryptCode(password)
     const user = await userModel.queryUser(username, password)
-    console.log(user, username, password)
     if (user.length) {
       const token = jwt.sign(
         {
-          username: username
+          userId: user[0].id
         },
         jwtConfig.SECRET,
         {
@@ -27,7 +26,7 @@ class User {
     }
     ctx.error({
       code: 400,
-      message: ctx.$t('loginError')
+      message: `用户名或者密码错误`
     })
   }
   test(ctx) {
@@ -38,11 +37,33 @@ class User {
       }
     }
   }
-  getUserInfo(ctx) {
-    ctx.commonSuccessWithData({
-      avatar:
-        'https://t9.baidu.com/it/u=1186391898,804431409&fm=74&app=80&size=f256,256&n=0&f=JPEG&fmt=auto?sec=1669741200&t=2c39d51f80411450242c9c364ffb8e70'
-    })
+  async getUserInfo(ctx) {
+    const token = ctx.header.authorization.split(' ')?.[1]
+    if (!token) {
+      ctx.error({
+        msg: '请登录',
+        code: 401
+      })
+    }
+    var decoded = jwt.decode(token)
+    const userId = decoded.userId
+    const userList = await userModel.getUserInfo(userId)
+    const userInfo = userList.reduce((result, item) => {
+      const { roleId, name, rolesName, avatar, ...rest } = item
+      if (!Object.keys(result).length) {
+        Object.assign(result, {
+          ...rest,
+          avatar:
+            avatar ||
+            'https://t9.baidu.com/it/u=1186391898,804431409&fm=74&app=80&size=f256,256&n=0&f=JPEG&fmt=auto?sec=1669741200&t=2c39d51f80411450242c9c364ffb8e70',
+          rolesList: [{ roleId, name, rolesName }]
+        })
+      } else {
+        result.rolesList.push({ roleId, name, rolesName })
+      }
+      return result
+    }, {})
+    ctx.commonSuccessWithData(userInfo)
   }
 }
 

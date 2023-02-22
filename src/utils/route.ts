@@ -1,7 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
-import { CustomRouteMeta, CustomRouteRecordRaw } from '@/router/interface'
-
+import router from '@/router'
 /**
  * 返回所有子路由
  */
@@ -41,7 +40,7 @@ function isNull(data: any) {
  * 根据 routes 数据，返回对应 menu 规则数组
  */
 export function generateMenus(routes: RouteRecordRaw[], basePath = '') {
-  const result: CustomRouteRecordRaw[] = []
+  const result: RouteRecordRaw[] = []
   // 遍历路由表
   routes.forEach((item) => {
     // 不存在 children && 不存在 meta 直接 return
@@ -61,7 +60,7 @@ export function generateMenus(routes: RouteRecordRaw[], basePath = '') {
         path: routePath,
         children: []
       }
-      const meta: CustomRouteMeta = route.meta as CustomRouteMeta
+      const meta = route.meta || {}
       // icon 与 title 必须全部存在
       if (meta.icon && meta.title) {
         // meta 存在生成 route 对象，放入 arr
@@ -76,4 +75,70 @@ export function generateMenus(routes: RouteRecordRaw[], basePath = '') {
     }
   })
   return result
+}
+
+/**
+ * @description: 当前用户是否有当前路由权限
+ * @param {string} roles
+ * @param {RouteRecordRaw} route
+ * @return {boolean}
+ */
+function hasPermission(roles: string[], route: RouteRecordRaw) {
+  if (route.meta && route.meta.roles) {
+    return roles.some((role) => (route.meta!.roles as string[]).includes(role))
+  } else {
+    return true
+  }
+}
+
+/**
+ * @description: 根据用户权限过滤路由
+ * @param {RouteRecordRaw} routes
+ * @param {string} roles
+ * @return {*}
+ */
+export function filterAsyncRoutes(routes: RouteRecordRaw[], roles: string[]) {
+  const res: RouteRecordRaw[] = []
+
+  routes.forEach((route) => {
+    const tmp = { ...route }
+    if (hasPermission(roles, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutes(tmp.children, roles)
+      }
+      res.push(tmp)
+    }
+  })
+
+  return res
+}
+
+// export function flatRouteTree(routes: RouteRecordRaw[]) {
+//   return routes.reduce((result, route: RouteRecordRaw) => {
+//     result.push(route)
+//     if (route.children) {
+//       flatRouteTree(route.children)
+//     }
+//     return result
+//   }, [] as RouteRecordRaw[])
+// }
+
+/**
+ * @description: 根据权限动态添加路由
+ * @param {RouteRecordRaw} routes
+ * @return {*}
+ */
+export function addDynamicRoute(routes: RouteRecordRaw[]) {
+  // const allDynamicRouter = flatRouteTree(routes)
+  routes.forEach((route) => {
+    router.addRoute({
+      ...route
+    })
+  })
+}
+
+export function resetRouter(routes: RouteRecordRaw[]) {
+  routes.forEach((route) => {
+    route.name && router.removeRoute(route.name)
+  })
 }
