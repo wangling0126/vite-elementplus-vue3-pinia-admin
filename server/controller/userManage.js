@@ -30,29 +30,54 @@ class UserManage {
     })
   }
   async getAllUserManageList(ctx) {
-    const data = await userModel.getAllUserManageList()
-    const allRoles = await userModel.getAllRoles()
-    data.forEach((item) => {
-      const rolesId = item.rolesId.split(',')
-      item.roles = allRoles.filter((item) => rolesId.includes(item.id + ''))
-    })
-
+    const userList = await userModel.getUserManageList(1, 1000)
+    const userInfo = userList.reduce((result, item) => {
+      const { id, roleId, name, rolesName, ...rest } = item
+      if (!result[id]) {
+        result[id] = {
+          ...rest,
+          roles: [{ roleId, name, rolesName }]
+        }
+      } else {
+        result[id].roles.push({ roleId, name, rolesName })
+      }
+      return result
+    }, {})
     ctx.commonSuccessWithData({
-      data
+      data: Object.values(userInfo)
     })
   }
+  /**
+   * @description: 批量导入用户
+   * @param {*} ctx
+   * @return {*} void
+   */
   async userBatchImport(ctx) {
-    const allRolesId = await userModel.getAllRoleIds()
     const data = ctx.request.body
-    const isNotValid = isNotValidRoleIds(allRolesId, data)
-    if (isNotValid) {
-      ctx.body = {
-        code: 408,
-        message: isNotValid,
-        data: []
-      }
+    // 查重 用户名不能重复
+    const userList = await userModel.getAllUserNameList()
+    const allUserNames = userList.map((item) => item.username)
+    const uploadUserName = data.map((item) => item.username)
+    const repeatUserName = allUserNames.filter((username) =>
+      uploadUserName.includes(username)
+    )
+    let isRepeat = repeatUserName.length
+    if (isRepeat) {
+      ctx.error({
+        msg: `用户名不能重复, 重复用户名有【${repeatUserName.join(
+          '，'
+        )}】，请修改后在上传`,
+        code: '308'
+      })
     } else {
-      await userModel.insertUserManage(data)
+      const insertData = await userModel.insertUserManage(data)
+      console.log(insertData)
+      const insertDataIds = new Array(insertData.affectedRows)
+        .fill(1)
+        .map((item, index) => index + insertData.insertId)
+
+      // 对应的id加上查看权限
+      userModel.insertUserRoles(insertDataIds)
       ctx.commonSuccessWithoutData({
         message: '插入成功'
       })

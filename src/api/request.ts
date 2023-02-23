@@ -43,7 +43,7 @@ class RequestHttp {
           const userStore = useUserStore()
           userStore.logout()
         } else if (code !== 200) {
-          ElMessage.error(msg || '服务出小差了~~')
+          ElMessage.error(msg || '服务出小差了~~~')
         }
         return response.data
       },

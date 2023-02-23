@@ -1,6 +1,11 @@
 <template>
   <div class="import">
     <ImportExport :onSuccess="onSuccess">
+      <template #downloadTemp
+        ><el-button @click="handleDownloadTemp"
+          >下载用户模板</el-button
+        ></template
+      >
       <template #fileList>
         <div class="show-file" v-if="currentFileName">
           <div class="file-name">
@@ -12,7 +17,9 @@
               :key="item"
               :label="item"
             >
-              <template #default="{ row }"> {{ row[item] }} </template>
+              <template #default="{ row }">
+                {{ row[USER_RELATIONS[item]] }}</template
+              >
             </el-table-column>
           </el-table>
         </div>
@@ -33,6 +40,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { formatDate } from './utils'
 import { useI18n } from 'vue-i18n'
+import { export_json_to_excel } from '@/utils/Export2Excel'
 export interface IExcelData {
   [propName: string]: string
 }
@@ -41,9 +49,7 @@ export interface IExcelData {
  */
 const USER_RELATIONS: { [propName: string]: string } = {
   姓名: 'username',
-  联系方式: 'mobile',
-  角色: 'rolesId',
-  开通时间: 'openTime'
+  联系方式: 'mobile'
 }
 interface IExcel {
   header: string[]
@@ -62,11 +68,7 @@ const generateData = (results: IExcelData[]) => {
   results.forEach((item) => {
     const userInfo: { [propName: string]: string } = {}
     Object.keys(item).forEach((key) => {
-      if (USER_RELATIONS[key] === 'openTime') {
-        userInfo[USER_RELATIONS[key]] = formatDate(+item[key])
-      } else {
-        userInfo[USER_RELATIONS[key]] = item[key]
-      }
+      userInfo[USER_RELATIONS[key]] = item[key]
     })
     arr.push(userInfo)
   })
@@ -79,6 +81,7 @@ const onSuccess = async ({ results, header, fileName }: IExcel) => {
   currentFileName.value = fileName
   currentExcelTableData.value = uploadData
   tableHeader.value = header
+  console.log(uploadData)
   await userBatchImport(uploadData).then((result) => {
     if (result.code === 200) {
       ElMessage.success({
@@ -89,6 +92,24 @@ const onSuccess = async ({ results, header, fileName }: IExcel) => {
       })
       router.push('/user/manage')
     }
+  })
+}
+/**
+ * @description: 下载用户导出的模板
+ * @return {*} void
+ */
+const handleDownloadTemp = () => {
+  export_json_to_excel({
+    // excel 表头
+    header: ['姓名', '联系方式'],
+    // excel 数据（二维数组结构）
+    data: [],
+    // 文件名称
+    filename: '用户导入默认模板',
+    // 是否自动列宽
+    autoWidth: true,
+    // 文件类型
+    bookType: 'xlsx'
   })
 }
 </script>

@@ -60,7 +60,7 @@ function routerResponseMiddle(option = {}) {
       ctx.type = option.type || 'json'
       ctx.body = {
         code: code || option.failCode || 500,
-        msg: ctx.$t(msg || option.failMsg || 'fail'),
+        msg: msg || ctx.$t(option.failMsg || 'fail'),
         success: false
       }
     }

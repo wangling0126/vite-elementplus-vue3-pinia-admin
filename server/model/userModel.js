@@ -10,7 +10,7 @@ class UserModel {
   async getUserManageList(currentPage, size) {
     return await query(
       `select u.*,r.* from
-      (select id, username, mobile ,is_admin from user limit ${
+      (select id, username, mobile, openTime ,is_admin from user limit ${
         (currentPage - 1) * size
       }, ${size}) as u
         left join user_role ur  on u.id = ur.user_id
@@ -20,6 +20,10 @@ class UserModel {
   // 获取所有用户
   async getAllUserManageList() {
     return await query(`SELECT * FROM user where delete_flag = '0' `)
+  }
+  // 获取所有用户名
+  async getAllUserNameList() {
+    return await query(`SELECT username FROM user`)
   }
   async getUserManageTotal() {
     return await query(
@@ -39,10 +43,22 @@ class UserModel {
     return await query(`SELECT id FROM roles`)
   }
   async insertUserManage(data) {
-    let res = `INSERT INTO user ( openTime, username,mobile,rolesId) VALUES `
-    data.forEach(({ openTime, username, mobile, rolesId }, index) => {
-      res = res + `('${openTime}', '${username}', '${mobile}', '${rolesId}')`
+    let res = `INSERT INTO user (username,mobile) VALUES `
+    data.forEach(({ username, mobile }, index) => {
+      res = res + `('${username}', '${mobile}')`
       if (index === data.length - 1) {
+        res += ';'
+      } else {
+        res += ','
+      }
+    })
+    return await query(res)
+  }
+  async insertUserRoles(ids) {
+    let res = `INSERT INTO user_role (user_id,role_id) VALUES `
+    ids.forEach((id, index) => {
+      res = res + `('${id}', '7')`
+      if (index === ids.length - 1) {
         res += ';'
       } else {
         res += ','

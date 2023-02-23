@@ -1,5 +1,10 @@
 <template>
   <div class="import-export-container">
+    <div class="download-wrap">
+      <div class="download-temp">
+        <slot name="downloadTemp"></slot>
+      </div>
+    </div>
     <div class="btn-upload">
       <el-button :loading="loading" type="primary" @click="handleUpload">
         {{ $t('excel.upload') }}
@@ -142,6 +147,16 @@ const handleDragover = (e: DragEvent) => {
   display: flex;
   justify-content: center;
   margin-top: 100px;
+  flex-wrap: wrap;
+  .download-wrap {
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: center;
+    display: flex;
+    .download-temp {
+      width: 700px;
+    }
+  }
   .excel-upload-input {
     display: none;
     z-index: -9999;
