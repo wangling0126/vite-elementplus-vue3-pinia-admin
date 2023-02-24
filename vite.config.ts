@@ -30,9 +30,20 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       })
     ],
     resolve: {
-      alias: {
-        '@': resolve('src') //作为 entries 的选项
-      }
+      alias: [
+        {
+          find: '@',
+          replacement: resolve('src')
+        },
+        {
+          find: '@antv/x6',
+          replacement: '@antv/x6/lib'
+        },
+        {
+          find: '@antv/x6-vue3-shape',
+          replacement: '@antv/x6-vue3-shape/lib'
+        }
+      ]
     },
     // vite热更新
     server: {

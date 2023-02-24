@@ -3,6 +3,7 @@ import layout from '@/views/layout/index.vue'
 import articleRouter from './models/article'
 import authRouter from './models/auth'
 import functionRouter from './models/function'
+import antvRouter from './models/antv'
 // 路由信息
 export const publicRoutes = [
   {
@@ -42,7 +43,12 @@ export const publicRoutes = [
 /**
  * 私有路由表
  */
-export const privateRoutes = [authRouter, functionRouter, articleRouter]
+export const privateRoutes = [
+  authRouter,
+  functionRouter,
+  articleRouter,
+  antvRouter
+]
 
 export const otherRoutes = [{ path: '/:pathMatch(.*)*', redirect: '/404' }]
 

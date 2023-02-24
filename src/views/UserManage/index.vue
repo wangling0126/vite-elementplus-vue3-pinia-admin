@@ -16,7 +16,7 @@
       border
       @selection-change="handleSelectionChange"
     >
-      <!-- <el-table-column type="selection" width="55" /> -->
+      <el-table-column type="selection" width="55" />
       <el-table-column
         :label="$t('userManage.name')"
         prop="username"
@@ -30,10 +30,6 @@
           {{ getRoleName(row.roles) }}
         </template>
       </el-table-column>
-      <!-- <el-table-column
-        :label="$t('userManage.openTime')"
-        prop="openTime"
-      ></el-table-column> -->
     </el-table>
     <div class="pagination-box">
       <el-pagination
@@ -56,17 +52,12 @@ export default { name: 'UserManage' }
 <script setup lang="ts">
 import { UserMange } from '@/api/interface/userManage'
 import {
-  deleteUserById,
   getUserManageList,
-  batchDeleteUserByIds,
   getAllUserManageList
 } from '@/api/modules/userManage'
-import { ElMessage } from 'element-plus'
 import { onActivated, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { export_json_to_excel } from '@/utils/Export2Excel'
-const i18n = useI18n()
 const tableData = ref<UserMange.UserManage[]>([])
 const currentPage = ref(1)
 const pageSize = ref(10)
@@ -103,36 +94,11 @@ const goImportPage = () => {
   router.push({ name: 'import' })
 }
 
-// const deleteUser = async (id: number) => {
-//   deleteUserById(id).then((res) => {
-//     if (res.code === 200) {
-//       ElMessage.success(i18n.t('tips.deleteSuccess'))
-//       handleCurrentPage(1)
-//     }
-//   })
-// }
-
 // 多选操作
 const multipleSelection = ref<UserMange.UserManage[]>([])
 const handleSelectionChange = (val: UserMange.UserManage[]) => {
   multipleSelection.value = val
 }
-
-// 批量删除
-
-// const handlerBatchDelete = () => {
-//   if (!multipleSelection.value.length) {
-//     ElMessage.warning(i18n.t('tips.multipleSelectionTips'))
-//     return
-//   }
-//   const ids = multipleSelection.value.map((item) => item.id)
-//   batchDeleteUserByIds(ids).then((res) => {
-//     if (res.code === 200) {
-//       ElMessage.success(i18n.t('tips.deleteSuccess'))
-//       handleCurrentPage(1)
-//     }
-//   })
-// }
 
 const formatDataTwoArray = (data: UserMange.UserManage[]) => {
   return data.reduce((result: string[][], item) => {

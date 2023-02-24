@@ -28,7 +28,9 @@ export default {
     articleEditor: '文章编辑',
     function: '常用功能',
     PrintPage: '打印',
-    userMenu: '菜单管理'
+    userMenu: '菜单管理',
+    antv: 'antv',
+    x6: 'x6'
   },
   首页: '首页',
   主题改变: '主题改变',

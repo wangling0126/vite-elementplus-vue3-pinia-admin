@@ -28,7 +28,9 @@ export default {
     articleEditor: 'articleEditor',
     function: 'function',
     PrintPage: 'PrintPage',
-    userMenu: 'menu admin'
+    userMenu: 'menu admin',
+    antv: 'antv',
+    x6: 'x6'
   },
   首页: 'Home',
   主题改变: 'theme change',
